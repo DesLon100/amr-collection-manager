@@ -1,7 +1,8 @@
+// js/app.js
+
 import { runPriceCheck, computePriceCheckMetrics } from "./pricecheck.js";
 import { makeWorkbenchFromLots } from "./amr-workbench.js";
 
-// js/app.js
 
 const STORE_KEY = "amr_collection_v2";
 const AMR_META_KEY = "amr_dataset_meta_v2";
