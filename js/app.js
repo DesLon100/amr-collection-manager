@@ -326,6 +326,7 @@ function render(){
 
   const view = applyFilters(enriched);
 
+  
   els.rows.innerHTML = view.map(it => {
     const artist = it.artist_name || it.artist || "—";
     const hasDate = !!parseYYYYMM(it.purchase_month);
