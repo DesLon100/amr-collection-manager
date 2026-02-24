@@ -358,3 +358,29 @@ body{
 .drawer-panel{
   overflow-x: hidden;
 }
+/* --- Fix overlap: chart vs. movement toggle --- */
+
+/* Give the chart block a real bottom gutter */
+.pc-chart-wrap{
+  display:block;
+  margin-bottom: 14px; /* creates separation above the CTA */
+}
+
+/* Ensure the Plotly container has a predictable height + spacing */
+.pc-chart{
+  min-height: 360px;       /* matches your inline style */
+  margin-bottom: 12px;     /* pushes the CTA down */
+}
+
+/* If a fallback message is injected into #pc-universe, keep it inside the chart box */
+.pc-chart .muted,
+#pc-universe .muted{
+  display:block;
+  padding: 10px 12px;
+}
+
+/* The CTA toggle should always start on a new line */
+.pc-context{
+  clear: both;
+  margin-top: 8px;
+}
