@@ -262,3 +262,99 @@ body{
   .drawer-backdrop{ grid-column:1; }
   .drawer-panel{ grid-column:1; max-width:none; }
 }
+/* ============================
+   Pricecheck UI patches (CM)
+   ============================ */
+
+/* Toggle row spacing */
+.pc-toggle-section{
+  margin: 6px 0 10px;
+}
+.pc-toggle-row{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+}
+
+/* iOS-style switch */
+.switch{
+  position:relative;
+  display:inline-block;
+  width:44px;
+  height:24px;
+}
+.switch input{
+  opacity:0;
+  width:0;
+  height:0;
+}
+.slider{
+  position:absolute;
+  cursor:pointer;
+  inset:0;
+  background: rgba(15,23,42,.18);
+  border:1px solid rgba(15,23,42,.10);
+  transition: .18s ease;
+  border-radius:999px;
+}
+.slider:before{
+  content:"";
+  position:absolute;
+  height:18px;
+  width:18px;
+  left:3px;
+  top:50%;
+  transform: translateY(-50%);
+  background:white;
+  box-shadow: 0 4px 10px rgba(2,6,23,.18);
+  transition: .18s ease;
+  border-radius:999px;
+}
+.switch input:checked + .slider{
+  background: rgba(44,58,92,.90);
+}
+.switch input:checked + .slider:before{
+  transform: translate(20px, -50%);
+}
+
+/* “See your price movement” button */
+.pc-bands-toggle{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:10px 12px;
+  border-radius:14px;
+  border:1px solid rgba(15,23,42,.10);
+  background:#fff;
+  cursor:pointer;
+  font-weight:800;
+}
+.pc-bands-toggle:hover{
+  background: rgba(44,58,92,.04);
+}
+.pc-bands-toggle .chev{
+  opacity:.7;
+  font-weight:900;
+}
+
+/* Movement panel layout */
+.pc-bands{
+  margin-top:10px;
+  border-top:1px solid rgba(15,23,42,.10);
+  padding-top:10px;
+}
+
+/* Critical: give Plotly room and avoid clipping */
+.pc-bands-chart{
+  width:100%;
+  min-height: 190px; /* ensures axis labels have space */
+  overflow: visible; /* helps if parent was clipping */
+}
+
+/* If the drawer panel is tight, reduce risk of clipping at edges */
+.drawer-panel{
+  overflow-x: hidden;
+}
