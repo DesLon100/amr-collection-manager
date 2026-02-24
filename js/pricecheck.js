@@ -10,401 +10,465 @@ const LOCATION_LOOKUP = {
   "33AUOSGD": "33 Auction · ONLINE SGD",
   "33AUSING": "33 Auction · SINGAPORE",
   "ARTCDROU": "Artcurial · DROUOT",
-  "ARTCMARR": "Artcurial · MARRAKECH",
-  "ARTCMONA": "Artcurial · MONACO",
+  "ARTCMARR": "Artcurial · MARRAKESH",
+  "ARTCMCAR": "Artcurial · MONTE CARLO",
+  "ARTCOEUR": "Artcurial · ONLINE EUR",
   "ARTCPARI": "Artcurial · PARIS",
-  "ARTCSDRO": "Artcurial · DROUOT",
-  "ARTCSLUX": "Artcurial · LUXEMBOURG",
-  "ARTCTOUL": "Artcurial · TOULOUSE",
-  "ARTCVEND": "Artcurial · VENDÔME",
-  "AUCATDUB": "Aucat · DUBAI",
-  "AUCATONL": "Aucat · ONLINE",
-  "AUCATPAR": "Aucat · PARIS",
-  "AUCATSHJ": "Aucat · SHARJAH",
-  "AUKTWARS": "Auktionshaus · WARSAW",
-  "AUKTVIEN": "Auktionshaus · VIENNA",
-  "AUKTZURI": "Auktionshaus · ZURICH",
-  "AURORAON": "Aurora · ONLINE",
-  "AURORAST": "Aurora · STOCKHOLM",
-  "AUSONLSY": "Australian · ONLINE SYDNEY",
-  "AUSSYDNE": "Australian · SYDNEY",
-  "BAUMANOS": "Bauman · ONLINE",
-  "BAUMANPA": "Bauman · PARIS",
-  "BAYONNEA": "Bayonne · AIX",
-  "BAYONNEP": "Bayonne · PARIS",
-  "BELGONLI": "Belgium · ONLINE",
-  "BELGUBRU": "Belgium · BRUSSELS",
-  "BENEDICT": "Benedict · ZURICH",
-  "BERLINER": "Berliner · BERLIN",
-  "BERNHEIM": "Bernheim · PARIS",
-  "BIDSPOT": "BidSpotter · ONLINE",
-  "BLOUINON": "Blouin · ONLINE",
-  "BONHAMS  ": "Bonhams · (UNKNOWN)",
-  "BONHAMSAU": "Bonhams · AUCKLAND",
-  "BONHAMSBA": "Bonhams · BATH",
-  "BONHAMSBK": "Bonhams · BAKU",
-  "BONHAMSBX": "Bonhams · BOXBOROUGH",
-  "BONHAMSCG": "Bonhams · CHICAGO",
-  "BONHAMSDO": "Bonhams · DOVER",
-  "BONHAMSDU": "Bonhams · DUBAI",
-  "BONHAMSEB": "Bonhams · EDINBURGH",
-  "BONHAMSFR": "Bonhams · FRANKFURT",
-  "BONHAMSGE": "Bonhams · GENEVA",
-  "BONHAMSGH": "Bonhams · GHENT",
-  "BONHAMSHK": "Bonhams · HONG KONG",
-  "BONHAMSLA": "Bonhams · LOS ANGELES",
-  "BONHAMSLE": "Bonhams · LEEDS",
-  "BONHAMSLN": "Bonhams · LONDON",
-  "BONHAMSME": "Bonhams · MELBOURNE",
-  "BONHAMSMN": "Bonhams · MONACO",
-  "BONHAMSMX": "Bonhams · MEXICO CITY",
-  "BONHAMSNY": "Bonhams · NEW YORK",
-  "BONHAMSOC": "Bonhams · OXFORD",
-  "BONHAMSON": "Bonhams · ONLINE",
-  "BONHAMSOT": "Bonhams · OTTAWA",
-  "BONHAMSPA": "Bonhams · PARIS",
-  "BONHAMSSF": "Bonhams · SAN FRANCISCO",
-  "BONHAMSSP": "Bonhams · SINGAPORE",
-  "BONHAMSSY": "Bonhams · SYDNEY",
-  "BONHAMSUS": "Bonhams · (US)",
-  "BONHAMSWE": "Bonhams · WEYBRIDGE",
-  "BOSTONAU": "Boston · BOSTON",
-  "BRUSSELS": "Brussels · BRUSSELS",
-  "BUKOWSKI": "Bukowski · STOCKHOLM",
-  "BUNDYONL": "Bundy · ONLINE",
-  "BUNDYSYD": "Bundy · SYDNEY",
-  "CAPITALAU": "Capital · NEW YORK",
-  "CARREONL": "Carré · ONLINE",
-  "CARRESPA": "Carré · PARIS",
-  "CHRISTIE": "Christie's · (UNKNOWN)",
-  "CHRISTAUS": "Christie's · AUCKLAND",
-  "CHRISTBKK": "Christie's · BANGKOK",
-  "CHRISTDUB": "Christie's · DUBAI",
-  "CHRISTER": "Christie's · (ER)",
-  "CHRISTGEN": "Christie's · GENEVA",
-  "CHRISTHK": "Christie's · HONG KONG",
-  "CHRISTLDN": "Christie's · LONDON",
-  "CHRISTMIL": "Christie's · MILAN",
-  "CHRISTNY": "Christie's · NEW YORK",
-  "CHRISTONL": "Christie's · ONLINE",
-  "CHRISTPAR": "Christie's · PARIS",
-  "CHRISTROM": "Christie's · ROME",
-  "CHRISTSEA": "Christie's · SEATTLE",
-  "CHRISTSH": "Christie's · SHANGHAI",
-  "CHRISTTOR": "Christie's · TORONTO",
-  "CHRISTTYO": "Christie's · TOKYO",
-  "CHRISTZRH": "Christie's · ZURICH",
-  "COLLINS": "Collins · MELBOURNE",
-  "CORNELIUS": "Cornelius · DUSSELDORF",
-  "COTTERONL": "Cotter · ONLINE",
-  "COTTERSYD": "Cotter · SYDNEY",
-  "COURTNEY": "Courtney · NEW YORK",
-  "DANSKE": "Danske · COPENHAGEN",
-  "DAVIDONL": "David · ONLINE",
-  "DAVIDPAR": "David · PARIS",
-  "DERBY": "Derby · DERBY",
-  "DOROTHE": "Dorotheum · (UNKNOWN)",
-  "DOROTHELG": "Dorotheum · LONDON",
-  "DOROTHEON": "Dorotheum · ONLINE",
-  "DOROTHEVI": "Dorotheum · VIENNA",
-  "DROUOTONL": "Drouot · ONLINE",
-  "DROUOTPAR": "Drouot · PARIS",
-  "DUNCAN": "Duncan · NEW YORK",
-  "DUNMORE": "Dunmore · DUBLIN",
-  "DUNSTAN": "Dunstan · LONDON",
-  "DUSSELD": "Dusseldorf · DUSSELDORF",
-  "EDVARDONL": "Edvard · ONLINE",
-  "EDVARDSTO": "Edvard · STOCKHOLM",
-  "EMIL": "Emil · ZURICH",
-  "EVOONL": "Evo · ONLINE",
-  "EVONYC": "Evo · NEW YORK",
-  "FARSETTI": "Farsetti · PRATO",
-  "FARSETTIO": "Farsetti · ONLINE",
-  "FARSETTIR": "Farsetti · ROME",
-  "FISCHER": "Fischer · LUCERNE",
-  "FISCHERON": "Fischer · ONLINE",
-  "FONCTION": "Fonction · BRUSSELS",
-  "FONCTIONO": "Fonction · ONLINE",
-  "FREEMAN": "Freeman's · PHILADELPHIA",
-  "FREEMANON": "Freeman's · ONLINE",
-  "GAGOSIAN": "Gagosian · NEW YORK",
-  "GAGOSIANL": "Gagosian · LONDON",
-  "GALLERYON": "Gallery · ONLINE",
-  "GALERIEPA": "Galerie · PARIS",
-  "GEM": "GEM · ONLINE",
-  "GERMANYON": "Germany · ONLINE",
-  "GERMANYBE": "Germany · BERLIN",
-  "GERMANYFR": "Germany · FRANKFURT",
-  "GERMANYMU": "Germany · MUNICH",
-  "GIEDREONL": "Giedre · ONLINE",
-  "GIEONL": "Gie · ONLINE",
-  "GOLDIN": "Goldin · ONLINE",
-  "GRISEBACH": "Grisebach · BERLIN",
-  "GRISEONL": "Grisebach · ONLINE",
-  "GROSVENOR": "Grosvenor · LONDON",
-  "HAMILTON": "Hamilton · NEW YORK",
-  "HAMILTONO": "Hamilton · ONLINE",
-  "HANSEN": "Hansen · COPENHAGEN",
-  "HANSENONL": "Hansen · ONLINE",
-  "HARDING": "Harding · LONDON",
-  "HARDO": "Harding · ONLINE",
-  "HARRIS": "Harris · NEW YORK",
-  "HARRISONL": "Harrison · LONDON",
-  "HERITAGE": "Heritage · DALLAS",
-  "HERITAGEO": "Heritage · ONLINE",
-  "HESSINK": "Hessink · ONLINE",
-  "HESSINKAM": "Hessink · AMSTERDAM",
-  "HINDMAN": "Hindman · CHICAGO",
-  "HINDMANON": "Hindman · ONLINE",
-  "HOLABIRD": "Holabird · RENO",
-  "HOLABIRDO": "Holabird · ONLINE",
-  "HONGKONGO": "Hong Kong · ONLINE",
-  "IE": "Ireland · (UNKNOWN)",
-  "IEONL": "Ireland · ONLINE",
-  "IEP": "Ireland · (UNKNOWN)",
-  "IMKINS": "Imkins · ONLINE",
-  "IMKINSNY": "Imkins · NEW YORK",
-  "INTERNAT": "International · (UNKNOWN)",
-  "INTERNATON": "International · ONLINE",
-  "IRISH": "Irish · DUBLIN",
-  "IRISHONL": "Irish · ONLINE",
-  "JAPANONL": "Japan · ONLINE",
-  "JAPANTOKY": "Japan · TOKYO",
-  "JEFFERY": "Jeffery · SYDNEY",
-  "JEFFERYON": "Jeffery · ONLINE",
-  "JONES": "Jones · NEW YORK",
-  "JONESONL": "Jones · ONLINE",
-  "KAMINSKI": "Kaminski · BEVERLY",
-  "KAMINSKIO": "Kaminski · ONLINE",
-  "KETTERER": "Ketterer · MUNICH",
-  "KETTERERO": "Ketterer · ONLINE",
-  "KETTERERZ": "Ketterer · ZURICH",
-  "KOLLER": "Koller · ZURICH",
-  "KOLLERONL": "Koller · ONLINE",
-  "KOLLERZA": "Koller · ZURICH A",
-  "KOLLERZB": "Koller · ZURICH B",
-  "KREUTZER": "Kreutzer · BERLIN",
-  "KREUTZERO": "Kreutzer · ONLINE",
-  "LAMA": "LAMA · LOS ANGELES",
-  "LAMAONL": "LAMA · ONLINE",
-  "LARASATI": "Larasati · JAKARTA",
-  "LARASATIO": "Larasati · ONLINE",
-  "LEONARDJ": "Leonard Joel · MELBOURNE",
-  "LEONARDJO": "Leonard Joel · ONLINE",
-  "LEONJOEL": "Leonard Joel · MELBOURNE",
-  "LESKIS": "Leski · MELBOURNE",
-  "LESKISONL": "Leski · ONLINE",
-  "LESLIEH": "Leslie Hindman · CHICAGO",
-  "LESLIEHON": "Leslie Hindman · ONLINE",
-  "LIAS": "Lias · ONLINE",
-  "LIASLON": "Lias · LONDON",
-  "LONDONONL": "London · ONLINE",
-  "LONONL": "London · ONLINE",
-  "LUXONL": "Luxembourg · ONLINE",
-  "LUXLUX": "Luxembourg · LUXEMBOURG",
-  "MACDOUGAL": "MacDougall's · LONDON",
-  "MACDOUGO": "MacDougall's · ONLINE",
-  "MELBOURNE": "Melbourne · MELBOURNE",
-  "MELBONL": "Melbourne · ONLINE",
-  "MEYER": "Meyer · PARIS",
-  "MEYERONL": "Meyer · ONLINE",
-  "MIAMI": "Miami · MIAMI",
-  "MIAMIONL": "Miami · ONLINE",
-  "MORPHY": "Morphy · DENVER",
-  "MORPHYONL": "Morphy · ONLINE",
-  "MUNICHONL": "Munich · ONLINE",
-  "MUNICHMUN": "Munich · MUNICH",
-  "NAGEL": "Nagel · STUTTGART",
-  "NAGELONL": "Nagel · ONLINE",
-  "NEWYORKON": "New York · ONLINE",
-  "NYONL": "New York · ONLINE",
-  "OCEANIC": "Oceanic · SYDNEY",
-  "OCEANICON": "Oceanic · ONLINE",
-  "ONL": "ONLINE",
-  "OTF": "Other · (UNKNOWN)",
-  "OTFONL": "Other · ONLINE",
-  "PALAZZO": "Palazzo · ONLINE",
-  "PARIS": "Paris · PARIS",
-  "PARISONL": "Paris · ONLINE",
-  "PHILLIPS": "Phillips · (UNKNOWN)",
-  "PHILLIPSGE": "Phillips · GENEVA",
-  "PHILLIPSHK": "Phillips · HONG KONG",
-  "PHILLIPSLN": "Phillips · LONDON",
-  "PHILLIPSNY": "Phillips · NEW YORK",
-  "PHILLIPSON": "Phillips · ONLINE",
-  "PHILLIPSPA": "Phillips · PARIS",
-  "POLANDONL": "Poland · ONLINE",
-  "POLANDWAW": "Poland · WARSAW",
-  "RAGO": "Rago · LAMBERTVILLE",
-  "RAGOONL": "Rago · ONLINE",
-  "RARE": "Rare · ONLINE",
-  "RAREPAR": "Rare · PARIS",
-  "REGONL": "Regional · ONLINE",
-  "ROCKEFELL": "Rockefeller · NEW YORK",
-  "ROCKEFELLO": "Rockefeller · ONLINE",
-  "ROMEONL": "Rome · ONLINE",
-  "ROME": "Rome · ROME",
-  "RUSSIAN": "Russian · MOSCOW",
-  "RUSSIANON": "Russian · ONLINE",
-  "SANFRANON": "San Francisco · ONLINE",
-  "SANFRAN": "San Francisco · SAN FRANCISCO",
-  "SAVOY": "Savoy · LONDON",
-  "SAVOYONL": "Savoy · ONLINE",
-  "SHEFFIELD": "Sheffield · SHEFFIELD",
-  "SHEFFIELDON": "Sheffield · ONLINE",
-  "SINGAPORE": "Singapore · SINGAPORE",
-  "SINGONL": "Singapore · ONLINE",
-  "SKINNER": "Skinner · BOSTON",
-  "SKINNERON": "Skinner · ONLINE",
-  "SLOAN": "Sloan · ONLINE",
-  "SOTHEBYS": "Sotheby's · (UNKNOWN)",
-  "SOTHEBYSGE": "Sotheby's · GENEVA",
-  "SOTHEBYSHK": "Sotheby's · HONG KONG",
-  "SOTHEBYSLN": "Sotheby's · LONDON",
-  "SOTHEBYSNY": "Sotheby's · NEW YORK",
-  "SOTHEBYSON": "Sotheby's · ONLINE",
-  "SOTHEBYSPA": "Sotheby's · PARIS",
-  "SPINK": "Spink · LONDON",
-  "SPINKONL": "Spink · ONLINE",
-  "SRI": "Sri Lanka · COLOMBO",
-  "SRIONL": "Sri Lanka · ONLINE",
-  "STOCKHOLM": "Stockholm · STOCKHOLM",
-  "STOONL": "Stockholm · ONLINE",
-  "STUTTGART": "Stuttgart · STUTTGART",
-  "STUTONL": "Stuttgart · ONLINE",
-  "SYDNEY": "Sydney · SYDNEY",
-  "SYDONL": "Sydney · ONLINE",
-  "TAJAN": "Tajan · PARIS",
-  "TAJANONL": "Tajan · ONLINE",
-  "TOKYO": "Tokyo · TOKYO",
-  "TOKYONL": "Tokyo · ONLINE",
-  "TORONTO": "Toronto · TORONTO",
-  "TORONL": "Toronto · ONLINE",
-  "VANHAM": "Van Ham · COLOGNE",
-  "VANHAMON": "Van Ham · ONLINE",
-  "VIENNA": "Vienna · VIENNA",
-  "VIENONL": "Vienna · ONLINE",
-  "WARSAW": "Warsaw · WARSAW",
-  "WARONL": "Warsaw · ONLINE",
-  "WESCHLER": "Weschler's · ROCKVILLE",
-  "WESCHLERO": "Weschler's · ONLINE",
-  "WIESBADEN": "Wiesbaden · WIESBADEN",
-  "WIESONL": "Wiesbaden · ONLINE",
-  "ZURICH": "Zurich · ZURICH",
-  "ZURIONL": "Zurich · ONLINE"
+  "ARTHLAGO": "ArtHouseNG · LAGOS",
+  "AUCTONLI": "Auctionsverket · ONLINE",
+  "AUCTOSEK": "Auctionsverket · ONLINE SEK",
+  "AUCTSTOC": "Auctionsverket · STOCKHOLM",
+  "AUCTOLDD": "Auctionsverket · ONLINE DKK",
+  "AUCTOEUR": "Auctionsverket · ONLINE EUR",
+  "AUCTOUSD": "Auctionsverket · ONLINE USD",
+  "CHPOBEIJ": "Beijing Poly Intl · BEIJING",
+  "CHPOHONG": "Beijing Poly Intl · HONG KONG",
+  "BONHBRED": "Bonhams · BREDGATE",
+  "BONHEDIN": "Bonhams · EDINBURGH",
+  "BONHHONG": "Bonhams · HONG KONG",
+  "BONHLOND": "Bonhams · LONDON",
+  "BONHLOSA": "Bonhams · LOS ANGELES",
+  "BONHMARL": "Bonhams · MARLBOROUGH",
+  "BONHMELB": "Bonhams · MELBOURNE",
+  "BONHNEWY": "Bonhams · NEW YORK",
+  "BONHONLI": "Bonhams · ONLINE",
+  "BONHOAUD": "Bonhams · ONLINE AUD",
+  "BONHOHCF": "Bonhams · ONLINE CHF",
+  "BONHODKK": "Bonhams · ONLINE DKK",
+  "BONHOEUR": "Bonhams · ONLINE EUR",
+  "BONHOGBP": "Bonhams · ONLINE GBP",
+  "BONHOHKD": "Bonhams · ONLINE HKD",
+  "BONHOUSD": "Bonhams · ONLINE USD",
+  "BONHOXFO": "Bonhams · OXFORD",
+  "BONHPARI": "Bonhams · PARIS",
+  "BONHSANF": "Bonhams · SAN FRANCISCO",
+  "BONHSYDN": "Bonhams · SYDNEY",
+  "BONHBRUS": "Bonhams · BRUSSELS",
+  "BUKOHELS": "Bukowskis · HELSINKY",
+  "BUKOONLI": "Bukowskis · ONLINE",
+  "BUKOOEUR": "Bukowskis · ONLINE EUR",
+  "BUKOOSEK": "Bukowskis · ONLINE SEK",
+  "BUKOSTOC": "Bukowskis · STOCKHOLM",
+  "CHGUBEIJ": "China Guardian · BEIJING",
+  "CHGUHONG": "China Guardian · HONG KONG",
+  "CHRIAMST": "Christie's · AMSTERDAM",
+  "CHRIDOHA": "Christie's · DOHA",
+  "CHRIDUBA": "Christie's · DUBAI",
+  "CHRIGENE": "Christie's · GENEVA",
+  "CHRIHONG": "Christie's · HONG KONG",
+  "CHRILOND": "Christie's · LONDON",
+  "CHRIMILA": "Christie's · MILAN",
+  "CHRINEWY": "Christie's · NEW YORK",
+  "CHRIONLI": "Christie's · ONLINE",
+  "CHRIOHCF": "Christie's · ONLINE CHF",
+  "CHRIOEUR": "Christie's · ONLINE EUR",
+  "CHRIOGBP": "Christie's · ONLINE GBP",
+  "CHRIOHKD": "Christie's · ONLINE HKD",
+  "CHRIOUSD": "Christie's · ONLINE USD",
+  "CHRIPARI": "Christie's · PARIS",
+  "CHRISHAN": "Christie's · SHANGHAI",
+  "CHRIZURI": "Christie's · ZURICH",
+  "AGUTDROU": "Claude Aguttes · DROUOT",
+  "AGUTLYON": "Claude Aguttes · LYON",
+  "AGUTNEUI": "Claude Aguttes · NEUILLY",
+  "AGUTONLI": "Claude Aguttes · ONLINE",
+  "AGUTOEUR": "Claude Aguttes · ONLINE EUR",
+  "AGUTPARI": "Claude Aguttes · PARIS",
+  "COUEONLI": "Couer D'Alene · ONLINE",
+  "COUERENO": "Couer D'Alene · RENO",
+  "DOROGRAZ": "Dorotheum · GRAZ",
+  "DOROKLAG": "Dorotheum · KLAGENFURT",
+  "DOROLINZ": "Dorotheum · LINZ",
+  "DOROONLI": "Dorotheum · ONLINE",
+  "DOROOEUR": "Dorotheum · ONLINE EUR",
+  "DOROPRAG": "Dorotheum · PRAGUE",
+  "DOROSALZ": "Dorotheum · SALZBURG",
+  "DOROWIEN": "Dorotheum · WIEN",
+  "DOYLNEWY": "Doyle · NEW YORK",
+  "FARSCORT": "Farsetti · CORTINA",
+  "FARSMILA": "Farsetti · MILAN",
+  "FARSONLI": "Farsetti · ONLINE",
+  "FARSOEUR": "Farsetti · ONLINE EUR",
+  "FARSPRAT": "Farsetti · PRATO",
+  "HEFFONLI": "Heffel · ONLINE",
+  "HEFFOCAD": "Heffel · ONLINE CAD",
+  "HEFFTORO": "Heffel · TORONTO",
+  "HEFFVANC": "Heffel · VANCOUVER",
+  "HERINEWY": "Heritage · NEW YORK",
+  "KORNBASE": "Kornfeld · BASEL",
+  "KORNBERN": "Kornfeld · BERN",
+  "KORNONLI": "Kornfeld · ONLINE",
+  "KORNOHCF": "Kornfeld · ONLINE CHF",
+  "LARABALI": "Larasati · BALI",
+  "LARAJAKA": "Larasati · JAKARTA",
+  "LARALOND": "Larasati · LONDON",
+  "LARAOGBP": "Larasati · ONLINE GBP",
+  "LARAOSGD": "Larasati · ONLINE SGD",
+  "LARASING": "Larasati · SINGAPORE",
+  "LEMPBERL": "Lempertz · BERLIN",
+  "LEMPBRUS": "Lempertz · BRUSSELS",
+  "LEMPCOLO": "Lempertz · COLOGNE",
+  "LEMPOEUR": "Lempertz · ONLINE EUR",
+  "LJOEMELB": "Leonard Joel · MELBOURNE",
+  "LJOEONLI": "Leonard Joel · ONLINE",
+  "LJOEOAUD": "Leonard Joel · ONLINE AUD",
+  "LJOESYAR": "Leonard Joel · SOUTH YARA",
+  "LJOESYDN": "Leonard Joel · SYDNEY",
+  "LJOEWOOL": "Leonard Joel · WOOLHARA",
+  "MEETONLI": "Meeting Art · ONLINE",
+  "MEETVERC": "Meeting Art · VERCELLI",
+  "MORTMEXC": "Morton Subastas · MEXICO CITY",
+  "MORTOMXN": "Morton Subastas · ONLINE MXN",
+  "PANDFLOR": "Pandolfini · FLORENCE",
+  "PANDMILA": "Pandolfini · MILAN",
+  "PANDONLI": "Pandolfini · ONLINE",
+  "PANDOEUR": "Pandolfini · ONLINE EUR",
+  "PHILGENE": "Phillips · GENEVA",
+  "PHILHONG": "Phillips · HONG KONG",
+  "PHILLOND": "Phillips · LONDON",
+  "PHILMOSC": "Phillips · MOSCOW",
+  "PHILNEWY": "Phillips · NEW YORK",
+  "PHILONLI": "Phillips · ONLINE",
+  "PHILOHCF": "Phillips · ONLINE CHF",
+  "PHILOEUR": "Phillips · ONLINE EUR",
+  "PHILOGBP": "Phillips · ONLINE GBP",
+  "PHILOHKD": "Phillips · ONLINE HKD",
+  "PHILOIDR": "Phillips · ONLINE IDR",
+  "PHILOUSD": "Phillips · ONLINE USD",
+  "PHILPARI": "Phillips · PARIS",
+  "PHILTAIP": "Phillips · TAIPEI",
+  "PHILTOKY": "Phillips · TOKYO",
+  "RASMBRED": "Rasmussen · BREDGATE",
+  "RASMONLI": "Rasmussen · ONLINE",
+  "RASMODKK": "Rasmussen · ONLINE DKK",
+  "RAVEONLI": "Ravenel · ONLINE",
+  "RAVEONTD": "Ravenel · ONLINE NTD",
+  "RAVETAIP": "Ravenel · TAIPEI",
+  "SAFFKOCH": "Saffron Art · KOCHI",
+  "SAFFMUMB": "Saffron Art · MUMBAI",
+  "SAFFNDEL": "Saffron Art · NEW DELHI",
+  "SAFFONLI": "Saffron Art · ONLINE",
+  "SAFFOINR": "Saffron Art · ONLINE INR",
+  "SALCMANI": "Salcedo · MANILA",
+  "SALCONLI": "Salcedo · ONLINE",
+  "SALCOPHP": "Salcedo · ONLINE PHP",
+  "SEOUBUSA": "Seoul · BUSAN",
+  "SEQUDAEG": "Seoul · DAEGU",
+  "SEOUHONG": "Seoul · HONG KONG",
+  "SEOUONLI": "Seoul · ONLINE",
+  "SEOUOKRW": "Seoul · ONLINE KRW",
+  "SEOUSEUL": "Seoul · SEOUL",
+  "SMSIMELB": "Smith & Singer · MELBOURNE",
+  "SMSIONLI": "Smith & Singer · ONLINE",
+  "SMSISYDN": "Smith & Singer · SYDNEY",
+  "SOTHCOLO": "Sotheby's · COLOGNE",
+  "SOTHDOHA": "Sotheby's · DOHA",
+  "SOTHDUBA": "Sotheby's · DUBAI",
+  "SOTHGENE": "Sotheby's · GENEVA",
+  "SOTHHONG": "Sotheby's · HONG KONG",
+  "SOTHLASV": "Sotheby's · LAS VEGAS",
+  "SOTHLOND": "Sotheby's · LONDON",
+  "SOTHMIAM": "Sotheby's · MIAMI",
+  "SOTHMILA": "Sotheby's · MILAN",
+  "SOTHMCAR": "Sotheby's · MONTE CARLO",
+  "SOTHMUMB": "Sotheby's · MUMBAI",
+  "SOTHNEWY": "Sotheby's · NEW YORK",
+  "SOTHONLI": "Sotheby's · ONLINE",
+  "SOTHOCHF": "Sotheby's · ONLINE CHF",
+  "SOTHOEUR": "Sotheby's · ONLINE EUR",
+  "SOTHOGBP": "Sotheby's · ONLINE GBP",
+  "SOTHOHKD": "Sotheby's · ONLINE HKD",
+  "SOTHOIDR": "Sotheby's · ONLINE IDR",
+  "SOTHOUSD": "Sotheby's · ONLINE USD",
+  "SOTHPARI": "Sotheby's · PARIS",
+  "SOTHSING": "Sotheby's · SINGAPORE",
+  "SOTHZURI": "Sotheby's · ZURICH",
+  "SWELCAPE": "Stephan Welz · CAPE TOWN",
+  "SWELJOHA": "Stephan Welz · JOHANNESBURG",
+  "SWELONLI": "Stephan Welz · ONLINE",
+  "SWELOZAR": "Stephan Welz · ONLINE ZAR",
+  "STRACAPE": "Strauss · CAPE TOWN",
+  "STRAJOHA": "Strauss · JOHANNESBURG",
+  "STRAONLI": "Strauss · ONLINE",
+  "STRAOZAR": "Strauss · ONLINE ZAR",
+  "SWANNEWY": "Swann · NEW YORK",
+  "TAJAONLI": "Tajan · ONLINE",
+  "TAJAOEUR": "Tajan · ONLINE EUR",
+  "TAJAPARI": "Tajan · PARIS",
+  "TEHATEHR": "Tehran Auction · TEHRAN",
+  "VGRIBERL": "Villa Grisebach · BERLIN",
+  "VGRIONLI": "Villa Grisebach · ONLINE",
+  "VGRIOEUR": "Villa Grisebach · ONLINE EUR",
+  "ARTCBASE": "Artcurial · BASEL",
+  "ARTCOCHF": "Artcurial · ONLINE EUR",
+  "AUCTHELS": "Auktionsverket · HELSINKY",
+  "SOTHSAAR": "Sothebys · SAUDI ARABIA"
 };
 
-// ------------------------------------------------------------
-// Helpers
-// ------------------------------------------------------------
-function clamp(x, lo, hi){ return Math.max(lo, Math.min(hi, x)); }
-function fmtGBP(n){
-  if(!Number.isFinite(n)) return "—";
-  const s = Math.round(n).toLocaleString("en-GB");
-  return `£${s}`;
+// Convert "House · CITY" -> "House (City)" for tooltips
+function locationLabel(code){
+  const c = String(code || "").trim();
+  if(!c) return "—";
+  const raw = LOCATION_LOOKUP[c] || c;
+
+  if(raw.includes("·")){
+    const [houseRaw, cityRaw] = raw.split("·").map(s => s.trim());
+    const city = String(cityRaw || "")
+      .toLowerCase()
+      .replace(/\b\w/g, ch => ch.toUpperCase());
+    return `${houseRaw} (${city})`;
+  }
+  return raw;
 }
 
-function monthStartUTC(d){
-  return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), 1));
-}
-function addMonthsUTC(d, m){
-  return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + m, 1));
-}
-function buildMonthRangeUTC(startDate, endDate){
-  const start = monthStartUTC(startDate);
-  const end   = monthStartUTC(endDate);
-  const out = [];
-  let cur = new Date(start);
-  while(cur <= end){
-    out.push(new Date(cur));
-    cur = addMonthsUTC(cur, 1);
-  }
-  return out;
-}
-function monthKeyUTC(d){
-  const y = d.getUTCFullYear();
-  const m = d.getUTCMonth()+1;
-  return `${y}-${String(m).padStart(2,"0")}`;
-}
-function parseYYYYMM(yyyymm){
-  if(!yyyymm) return null;
-  const s = String(yyyymm).trim();
-  if(!/^\d{6}$/.test(s)) return null;
-  const y = Number(s.slice(0,4));
-  const m = Number(s.slice(4,6));
-  if(m<1||m>12) return null;
-  return new Date(Date.UTC(y, m-1, 1));
+function fmtGBP(x){
+  if(!Number.isFinite(x)) return "—";
+  return "£" + Math.round(x).toLocaleString("en-GB");
 }
 
 function weightedQuantile(values, weights, q){
-  const pairs = [];
+  const arr = [];
   for(let i=0;i<values.length;i++){
     const v = values[i];
-    const w = weights ? weights[i] : 1;
-    if(Number.isFinite(v) && Number.isFinite(w) && w > 0) pairs.push([v,w]);
+    const w = weights[i];
+    if(!Number.isFinite(v) || !Number.isFinite(w) || w <= 0) continue;
+    arr.push({ v, w });
   }
-  if(!pairs.length) return null;
-  pairs.sort((a,b)=>a[0]-b[0]);
-  const totalW = pairs.reduce((s,p)=>s+p[1],0);
-  const target = q*totalW;
+  if(!arr.length) return NaN;
+
+  arr.sort((a,b)=>a.v-b.v);
+
+  let total = 0;
+  for(const a of arr) total += a.w;
+  if(!(total > 0)) return NaN;
+
+  const target = q * total;
   let cum = 0;
-  for(const [v,w] of pairs){
-    cum += w;
-    if(cum >= target) return v;
+  for(const a of arr){
+    cum += a.w;
+    if(cum >= target) return a.v;
   }
-  return pairs[pairs.length-1][0];
+  return arr[arr.length-1].v;
 }
 
-function ols(xArr, yArr){
-  const n = Math.min(xArr.length, yArr.length);
-  if(n < 2) return null;
-  let sx=0, sy=0, sxx=0, sxy=0, k=0;
-  for(let i=0;i<n;i++){
-    const x = xArr[i], y = yArr[i];
-    if(!Number.isFinite(x) || !Number.isFinite(y)) continue;
-    sx += x; sy += y; sxx += x*x; sxy += x*y; k++;
+function parseYYYYMM(s){
+  const t = String(s || "").trim();
+  if(!/^\d{6}$/.test(t)) return null;
+  const y = Number(t.slice(0,4));
+  const m = Number(t.slice(4,6));
+  if(!Number.isFinite(y) || !Number.isFinite(m) || m < 1 || m > 12) return null;
+  return new Date(Date.UTC(y, m-1, 1));
+}
+
+function addMonthsUTC(d, deltaMonths){
+  return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + deltaMonths, 1));
+}
+
+function monthStartUTC(d){
+  if(!(d instanceof Date)) return null;
+  return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), 1));
+}
+
+function monthIndexUTC(d){
+  return d.getUTCFullYear() * 12 + d.getUTCMonth();
+}
+
+function monthFromIndexUTC(idx){
+  const y = Math.floor(idx / 12);
+  const m = idx - y * 12;
+  return new Date(Date.UTC(y, m, 1));
+}
+
+function buildMonthRangeUTC(minDate, maxDate){
+  const a = monthIndexUTC(monthStartUTC(minDate));
+  const b = monthIndexUTC(monthStartUTC(maxDate));
+  const months = [];
+  for(let i = a; i <= b; i++){
+    months.push(monthFromIndexUTC(i));
   }
-  if(k < 2) return null;
-  const denom = (k*sxx - sx*sx);
-  if(Math.abs(denom) < 1e-12) return null;
-  const b = (k*sxy - sx*sy) / denom;
-  const a = (sy - b*sx) / k;
+  return months;
+}
+
+function monthKeyUTC(d){
+  const y = d.getUTCFullYear();
+  const m = String(d.getUTCMonth() + 1).padStart(2, "0");
+  return `${y}${m}`;
+}
+
+function windowN(allRows, endDate, months){
+  const start = addMonthsUTC(endDate, -(months - 1));
+  return allRows.filter(r => r.date >= start && r.date <= endDate);
+}
+
+function ols(xs, ys){
+  const n = xs.length;
+  if(n < 2) return null;
+
+  let sx = 0, sy = 0, sxx = 0, sxy = 0;
+  for(let i=0;i<n;i++){
+    const x = xs[i], y = ys[i];
+    sx += x; sy += y;
+    sxx += x * x;
+    sxy += x * y;
+  }
+  const denom = (n * sxx - sx * sx);
+  if(denom === 0) return null;
+
+  const b = (n * sxy - sx * sy) / denom;
+  const a = (sy - b * sx) / n;
   return { a, b };
 }
 
-function percentileOfSorted(sortedArr, value){
-  if(!sortedArr.length || !Number.isFinite(value)) return null;
-  let lo=0, hi=sortedArr.length;
-  while(lo<hi){
-    const mid = (lo+hi)>>1;
-    if(sortedArr[mid] <= value) lo = mid+1;
-    else hi = mid;
-  }
-  return lo / sortedArr.length; // in [0,1]
-}
-
-function windowRows(all, startDate, endDate){
-  const s = startDate.getTime(), e = endDate.getTime();
-  return all.filter(r=>{
-    const t = r.date.getTime();
-    return t>=s && t<=e;
-  });
-}
-
-// ------------------------------------------------------------
-// Row field adapters (keeps the rest resilient to CSV headers)
-// ------------------------------------------------------------
-function getDate(r){ return r.date; }
-function getPrice(r){ return r.price; }
-function getWeight(r){ return Number.isFinite(r.weight) ? r.weight : 1; }
-
+// CSV fields (coming cleanly from loaded lots)
 function getLocationCode(r){ return String(r.LocationCode ?? "").trim(); }
 function getLotNo(r){ return String(r.LotNo ?? "").trim() || "—"; }
 function getSaleURL(r){ return String(r.SaleURL ?? "").trim(); }
 
+// ------------------------------------------------------------
+// Shared: build benchmarks + regressions for an artist
+// ------------------------------------------------------------
+function buildBenchmarks({ workbench, artistId }){
+  const all = workbench.getLotRows()
+    .filter(r => r.id === artistId && Number.isFinite(r.price) && r.date)
+    .sort((a,b)=>a.date-b.date);
+
+  if(all.length < 10) throw new Error("Not enough auction history.");
+
+  const TRANSPORT_WINDOW_MONTHS = 24;
+  const MIN_SALES_IN_WINDOW = 10;
+
+  const months = buildMonthRangeUTC(all[0].date, all[all.length-1].date);
+  const allM = all.map(r => ({ ...r, _m: monthStartUTC(r.date) }));
+
+  let startPtr = 0;
+  let endPtr = 0;
+
+  const p50T = [];
+  const p50Vals = [];
+
+  const meanT = [];
+  const meanVals = [];
+
+  const monthToT = new Map(); // endMonthKey -> t index
+
+  for(let i=0;i<months.length;i++){
+    const endMonth = months[i];
+    const startMonth = addMonthsUTC(endMonth, -(TRANSPORT_WINDOW_MONTHS - 1));
+
+    while(endPtr < allM.length && allM[endPtr]._m <= endMonth) endPtr++;
+    while(startPtr < allM.length && allM[startPtr]._m < startMonth) startPtr++;
+
+    const win = allM.slice(startPtr, endPtr);
+    if(win.length < MIN_SALES_IN_WINDOW) continue;
+
+    // month weights
+    const MIN_SALES_PER_MONTH = 5;
+    const monthCounts = new Map();
+    for(const r of win){
+      const k = monthKeyUTC(r._m);
+      monthCounts.set(k, (monthCounts.get(k) || 0) + 1);
+    }
+
+    const vals = [];
+    const wts  = [];
+    for(const r of win){
+      const v = r.price;
+      if(!Number.isFinite(v)) continue;
+      const k = monthKeyUTC(r._m);
+      const c = monthCounts.get(k) || 1;
+      vals.push(v);
+      wts.push(1 / Math.max(c, MIN_SALES_PER_MONTH));
+    }
+    if(vals.length < MIN_SALES_IN_WINDOW) continue;
+
+    const med = weightedQuantile(vals, wts, 0.5);
+    if(!Number.isFinite(med) || med <= 0) continue;
+
+    let wSum = 0, vwSum = 0;
+    for(let j=0;j<vals.length;j++){
+      const v = vals[j], w = wts[j];
+      wSum += w;
+      vwSum += v * w;
+    }
+    const mean = (wSum > 0) ? (vwSum / wSum) : NaN;
+    if(!Number.isFinite(mean) || mean <= 0) continue;
+
+    p50T.push(i);
+    p50Vals.push(med);
+
+    meanT.push(i);
+    meanVals.push(mean);
+
+    monthToT.set(monthKeyUTC(endMonth), i);
+  }
+
+  const regP50  = (p50T.length  >= 2) ? ols(p50T,  p50Vals.map(v => Math.log(v))) : null;
+  const regMean = (meanT.length >= 2) ? ols(meanT, meanVals.map(v => Math.log(v))) : null;
+
+  return { all, months, monthToT, regP50, regMean, TRANSPORT_WINDOW_MONTHS, MIN_SALES_IN_WINDOW };
+}
+
+function trendAtMonth({ regObj, monthToT, monthUTC }){
+  const t = monthToT.get(monthKeyUTC(monthStartUTC(monthUTC)));
+  if(!regObj || !Number.isFinite(t)) return NaN;
+  const v = Math.exp(regObj.a + regObj.b * t);
+  return (Number.isFinite(v) && v > 0) ? v : NaN;
+}
+
+function impliedValueAtWith({
+  all,
+  monthToT,
+  regObj,
+  purchaseMonth,
+  targetMonthUTC,
+  price,
+  TRANSPORT_WINDOW_MONTHS,
+  MIN_SALES_IN_WINDOW
+}){
+  if(!regObj || !Number.isFinite(price) || price <= 0) return null;
+
+  const tInput  = monthToT.get(monthKeyUTC(monthStartUTC(purchaseMonth)));
+  const tTarget = monthToT.get(monthKeyUTC(monthStartUTC(targetMonthUTC)));
+
+  if(!Number.isFinite(tInput) || !Number.isFinite(tTarget)) return null;
+
+  const winInput  = windowN(all, monthStartUTC(purchaseMonth), TRANSPORT_WINDOW_MONTHS);
+  const winTarget = windowN(all, monthStartUTC(targetMonthUTC), TRANSPORT_WINDOW_MONTHS);
+
+  if(winInput.length < MIN_SALES_IN_WINDOW || winTarget.length < MIN_SALES_IN_WINDOW) return null;
+
+  const pInput  = Math.exp(regObj.a + regObj.b * tInput);
+  const pTarget = Math.exp(regObj.a + regObj.b * tTarget);
+
+  if(!Number.isFinite(pInput) || !Number.isFinite(pTarget) || pInput <= 0 || pTarget <= 0) return null;
+
+  return price * (pTarget / pInput);
+}
+
+function pickEngine({ price, purchaseMonth, regP50, regMean, monthToT }){
+  const p50At  = trendAtMonth({ regObj: regP50,  monthToT, monthUTC: purchaseMonth });
+  const meanAt = trendAtMonth({ regObj: regMean, monthToT, monthUTC: purchaseMonth });
+
+  // default
+  let engine = "p50";
+
+  const hasP50  = Number.isFinite(p50At);
+  const hasMean = Number.isFinite(meanAt);
+
+  if(!hasP50 && hasMean) return "mean";
+  if(hasP50 && !hasMean) return "p50";
+  if(!hasP50 && !hasMean) return "p50";
+
+  // distance in log space
+  const dP50  = Math.abs(Math.log(price) - Math.log(p50At));
+  const dMean = Math.abs(Math.log(price) - Math.log(meanAt));
+  engine = (dMean < dP50) ? "mean" : "p50";
+
+  return engine;
+}
 
 // ------------------------------------------------------------
-// Compute-only (no Plotly): engine + context now + movement
+// Compute-only API (used by Collection Manager table)
 // ------------------------------------------------------------
 export function computePriceCheckMetrics({
   workbench,
@@ -412,97 +476,174 @@ export function computePriceCheckMetrics({
   price,
   myMonthYYYYMM
 }){
-  const all = workbench.getLotRows()
-    .filter(r => r.id === artistId && Number.isFinite(r.price) && r.date)
-    .sort((a,b)=>a.date-b.date);
+  const { all, months, monthToT, regP50, regMean, TRANSPORT_WINDOW_MONTHS, MIN_SALES_IN_WINDOW } =
+    buildBenchmarks({ workbench, artistId });
 
-  if(all.length < 10) throw new Error("Not enough auction history.");
+  const latestDate = all[all.length - 1].date;
 
   const userMonthDate = parseYYYYMM(myMonthYYYYMM);
-  const artworkDate = userMonthDate || all[all.length-1].date;
+  const hasUserMonth = !!userMonthDate;
+
+  const artworkDate = userMonthDate || latestDate;
   const purchaseMonth = monthStartUTC(artworkDate);
-  const latestDate  = all[all.length-1].date;
 
-  const TRANSPORT_WINDOW_MONTHS = 24;
-  const MIN_SALES_IN_WINDOW = 10;
+  const engine = pickEngine({ price, purchaseMonth, regP50, regMean, monthToT });
+  const activeReg = (engine === "mean") ? regMean : regP50;
 
-  // Rolling 24m series (mean + weighted p50)
-  const startRoll = addMonthsUTC(all[0].date, TRANSPORT_WINDOW_MONTHS-1);
-  const months = buildMonthRangeUTC(startRoll, latestDate);
+  // context now (latest month)
+  const contextNow = impliedValueAtWith({
+    all,
+    monthToT,
+    regObj: activeReg,
+    purchaseMonth,
+    targetMonthUTC: monthStartUTC(latestDate),
+    price,
+    TRANSPORT_WINDOW_MONTHS,
+    MIN_SALES_IN_WINDOW
+  });
 
-  const meanSeries = [];
-  const p50wSeries = [];
-
-  for(const m of months){
-    const wStart = addMonthsUTC(m, -(TRANSPORT_WINDOW_MONTHS-1));
-    const wEnd   = m;
-    const win = windowRows(all, wStart, wEnd);
-    if(win.length < MIN_SALES_IN_WINDOW){
-      meanSeries.push([m, null]);
-      p50wSeries.push([m, null]);
-      continue;
-    }
-    const prices  = win.map(getPrice);
-    const weights = win.map(getWeight);
-    const mean = prices.reduce((s,v)=>s+v,0)/prices.length;
-    const p50w = weightedQuantile(prices, weights, 0.5);
-    meanSeries.push([m, mean]);
-    p50wSeries.push([m, p50w]);
-  }
-
-  // Engine choice: use whichever has more usable points, default to p50w
-  const nMean = meanSeries.filter(d=>Number.isFinite(d[1])).length;
-  const nP50w = p50wSeries.filter(d=>Number.isFinite(d[1])).length;
-  const engine = (nP50w >= nMean) ? "p50" : "mean";
-  const series = (engine === "p50") ? p50wSeries : meanSeries;
-
-  // Build regression over series in log space
-  const tArr = [];
-  const yArr = [];
-  const monthIndex = new Map(months.map((d,i)=>[monthKeyUTC(d), i]));
-  for(const [m,v] of series){
-    if(Number.isFinite(v) && v > 0){
-      tArr.push(monthIndex.get(monthKeyUTC(m)));
-      yArr.push(Math.log(v));
-    }
-  }
-  const reg = (tArr.length >= 2) ? ols(tArr, yArr) : null;
-
-  function regAtMonth(m){
-    const t = monthIndex.get(monthKeyUTC(m));
-    if(!reg || t==null) return null;
-    return Math.exp(reg.a + reg.b*t);
-  }
-
-  const trendPurchase = regAtMonth(purchaseMonth);
-  const trendLatest = regAtMonth(monthStartUTC(latestDate));
-
-  // context now (engine value at latest month)
-  const contextNow = trendLatest;
-
-  // movement: implied FMV now from purchase price scaled by regression move
-  let equivNow = null;
-  if(Number.isFinite(price) && price > 0 && Number.isFinite(trendPurchase) && trendPurchase > 0 && Number.isFinite(trendLatest) && trendLatest > 0){
-    equivNow = price * (trendLatest / trendPurchase);
-  }
-
-  // movementPct: percent change from purchase price to implied now
+  // 12-month movement (ONLY if user actually gave a purchase month)
   let movementPct = null;
-  if(Number.isFinite(equivNow) && Number.isFinite(price) && price > 0){
-    movementPct = ((equivNow / price) - 1) * 100;
+  if(hasUserMonth){
+    const plus12 = addMonthsUTC(purchaseMonth, 12);
+    // clamp into month range available
+    const minM = months[0];
+    const maxM = months[months.length - 1];
+    const target12 = (plus12 < minM) ? minM : (plus12 > maxM ? maxM : plus12);
+
+    const v12 = impliedValueAtWith({
+      all,
+      monthToT,
+      regObj: activeReg,
+      purchaseMonth,
+      targetMonthUTC: target12,
+      price,
+      TRANSPORT_WINDOW_MONTHS,
+      MIN_SALES_IN_WINDOW
+    });
+
+    if(Number.isFinite(v12) && Number.isFinite(price) && price > 0){
+      movementPct = ((v12 / price) - 1) * 100;
+    }
   }
 
   return {
-    engine,          // "mean" | "p50"
-    contextNow,      // numeric or null
-    movementPct,     // numeric or null
-    latestMonth: monthStartUTC(latestDate)
+    engine,                 // "mean" | "p50"
+    contextNow: Number.isFinite(contextNow) ? contextNow : NaN,
+    movementPct: Number.isFinite(movementPct) ? movementPct : NaN
   };
 }
 
+// ------------------------------------------------------------
+// Movement slider (FMV) — DATE axis, bubbles show £ values
+// ------------------------------------------------------------
+function renderMovement(el, {
+  purchaseMonth,
+  targetMonth,
+  price,
+  equivNow,
+  captionText = "",
+  rightLabel = "Revaluation" // caller decides wording
+}){
+  if(!el) return;
+
+  if(!(purchaseMonth instanceof Date) || !(targetMonth instanceof Date)){
+    el.innerHTML = "";
+    return;
+  }
+  if(!Number.isFinite(price) || !Number.isFinite(equivNow)){
+    el.innerHTML = "";
+    return;
+  }
+
+  const x0 = monthStartUTC(purchaseMonth);
+  const x1 = monthStartUTC(targetMonth);
+
+  const minX = (x0 < x1) ? addMonthsUTC(x0, -6) : addMonthsUTC(x1, -6);
+  const maxX = (x0 > x1) ? addMonthsUTC(x0,  6) : addMonthsUTC(x1,  6);
+
+  const ann = [
+    {
+      x: x0, y: 0,
+      xref:"x", yref:"y",
+      text: `My Artwork<br><b>${fmtGBP(price)}</b>`,
+      showarrow:false,
+      xanchor:"center",
+      yanchor:"bottom",
+      yshift: 18,
+      align:"center",
+      font:{size:12, color:"#111"},
+      bgcolor:"#fee7b1",
+      bordercolor:"#2c3a5c",
+      borderwidth:2,
+      borderpad:6
+    },
+    {
+      x: x1, y: 0,
+      xref:"x", yref:"y",
+      text: `${rightLabel}<br><b>${fmtGBP(equivNow)}</b>`,
+      showarrow:false,
+      xanchor:"center",
+      yanchor:"bottom",
+      yshift: 18,
+      align:"center",
+      font:{size:12, color:"#fff"},
+      bgcolor:"#2c3a5c",
+      bordercolor:"#2c3a5c",
+      borderwidth:2,
+      borderpad:6
+    }
+  ];
+
+  Plotly.newPlot(el, [
+    {
+      x:[minX, maxX], y:[0,0],
+      mode:"lines",
+      line:{width:12,color:"rgba(44,58,92,0.10)"},
+      hoverinfo:"skip",
+      showlegend:false
+    },
+    {
+      x:[x0], y:[0],
+      mode:"markers",
+      marker:{size:12,color:"#fee7b1",line:{width:3,color:"#2c3a5c"}},
+      hoverinfo:"skip",
+      showlegend:false
+    },
+    {
+      x:[x1], y:[0],
+      mode:"markers",
+      marker:{size:11,color:"#2c3a5c"},
+      hoverinfo:"skip",
+      showlegend:false
+    }
+  ],{
+    margin:{l:34,r:34,t:64,b:56},
+    xaxis:{
+      type:"date",
+      range:[minX, maxX],
+      showgrid:false,
+      zeroline:false,
+      showline:false,
+      ticks:"outside",
+      ticklen:4,
+      tickformat:"%Y",
+      dtick:"M24",
+      automargin:true,
+      showticklabels:true
+    },
+    yaxis:{visible:false, range:[-1.2, 0.9]},
+    annotations: ann,
+    paper_bgcolor:"rgba(0,0,0,0)",
+    plot_bgcolor:"rgba(0,0,0,0)"
+  },{displayModeBar:false, responsive:true});
+
+  const capEl = document.getElementById("pc-move-caption");
+  if(capEl) capEl.textContent = captionText;
+}
 
 // ------------------------------------------------------------
-// Plot + compute for detail view
+// Full chart renderer (Plotly scatter + movement panel behaviour)
 // ------------------------------------------------------------
 export function runPriceCheck({
   workbench,
@@ -512,204 +653,431 @@ export function runPriceCheck({
   yScale,
   elChart
 }){
-  const all = workbench.getLotRows()
-    .filter(r => r.id === artistId && Number.isFinite(r.price) && r.date)
-    .sort((a,b)=>a.date-b.date);
+  const { all, months, monthToT, regP50, regMean, TRANSPORT_WINDOW_MONTHS, MIN_SALES_IN_WINDOW } =
+    buildBenchmarks({ workbench, artistId });
 
-  if(all.length < 10) throw new Error("Not enough auction history.");
+  const latestDate = all[all.length - 1].date;
 
-  // NEW: distinguish between "user supplied date" and "fallback date"
   const userMonthDate = parseYYYYMM(myMonthYYYYMM);
   const hasUserMonth = !!userMonthDate;
 
-  const artworkDate = userMonthDate || all[all.length-1].date;
+  const artworkDate = userMonthDate || latestDate;
   const purchaseMonth = monthStartUTC(artworkDate);
-  const latestDate  = all[all.length-1].date;
 
-  const TRANSPORT_WINDOW_MONTHS = 24;
-  const MIN_SALES_IN_WINDOW = 10;
+  const engine = pickEngine({ price, purchaseMonth, regP50, regMean, monthToT });
+  const activeReg = (engine === "mean") ? regMean : regP50;
 
-  // Rolling 24m series (mean + weighted p50)
-  const startRoll = addMonthsUTC(all[0].date, TRANSPORT_WINDOW_MONTHS-1);
-  const months = buildMonthRangeUTC(startRoll, latestDate);
+  // Scatter universe
+  const x = all.map(r=>r.date);
+  const y = all.map(r=>r.price);
 
-  const meanSeries = [];
-  const p50wSeries = [];
+  const customdata = all.map(r => [
+    locationLabel(getLocationCode(r)),
+    getLotNo(r),
+    getSaleURL(r)
+  ]);
 
-  for(const m of months){
-    const wStart = addMonthsUTC(m, -(TRANSPORT_WINDOW_MONTHS-1));
-    const wEnd   = m;
-    const win = windowRows(all, wStart, wEnd);
-    if(win.length < MIN_SALES_IN_WINDOW){
-      meanSeries.push([m, null]);
-      p50wSeries.push([m, null]);
-      continue;
-    }
-    const prices  = win.map(getPrice);
-    const weights = win.map(getWeight);
-    const mean = prices.reduce((s,v)=>s+v,0)/prices.length;
-    const p50w = weightedQuantile(prices, weights, 0.5);
-    meanSeries.push([m, mean]);
-    p50wSeries.push([m, p50w]);
-  }
+  const hovertemplate =
+    "%{x|%b %Y}<br>" +
+    "<b>£%{y:,.0f}</b><br>" +
+    "%{customdata[0]}<br>" +
+    "Lot %{customdata[1]}" +
+    "<extra>Click dot to open sale</extra>";
 
-  // Engine choice: use whichever has more usable points, default to p50w
-  const nMean = meanSeries.filter(d=>Number.isFinite(d[1])).length;
-  const nP50w = p50wSeries.filter(d=>Number.isFinite(d[1])).length;
-  const engine = (nP50w >= nMean) ? "p50" : "mean";
-  const series = (engine === "p50") ? p50wSeries : meanSeries;
-
-  // Regression in log space
-  const tArr = [];
-  const yArr = [];
-  const monthIndex = new Map(months.map((d,i)=>[monthKeyUTC(d), i]));
-  for(const [m,v] of series){
-    if(Number.isFinite(v) && v > 0){
-      tArr.push(monthIndex.get(monthKeyUTC(m)));
-      yArr.push(Math.log(v));
-    }
-  }
-  const reg = (tArr.length >= 2) ? ols(tArr, yArr) : null;
-
-  function regAtMonth(m){
-    const t = monthIndex.get(monthKeyUTC(m));
-    if(!reg || t==null) return null;
-    return Math.exp(reg.a + reg.b*t);
-  }
-
-  const trendPurchase = regAtMonth(purchaseMonth);
-  const trendLatest = regAtMonth(monthStartUTC(latestDate));
-
-  // implied FMV now from purchase price scaled by regression move
-  let equivLatest = null;
-  if(Number.isFinite(price) && price > 0 && Number.isFinite(trendPurchase) && trendPurchase > 0 && Number.isFinite(trendLatest) && trendLatest > 0){
-    equivLatest = price * (trendLatest / trendPurchase);
-  }
-
-  // Purchase percentile in purchase window (only if user supplied date; else null)
-  let pct = null;
-  if(hasUserMonth){
-    const winPurchase = windowRows(all, addMonthsUTC(purchaseMonth, -(TRANSPORT_WINDOW_MONTHS-1)), purchaseMonth);
-    const sorted = winPurchase.map(getPrice).filter(Number.isFinite).sort((a,b)=>a-b);
-    pct = percentileOfSorted(sorted, price);
-  }
-
-  // Build scatter points
-  const xs = all.map(getDate);
-  const ys = all.map(getPrice);
-
-  const htxt = all.map(r=>{
-    const dt = monthKeyUTC(monthStartUTC(getDate(r)));
-    const pr = fmtGBP(getPrice(r));
-    const loc = LOCATION_LOOKUP[getLocationCode(r)] || getLocationCode(r) || "";
-    const lot = getLotNo(r);
-    const url = getSaleURL(r);
-    const urlLine = url ? `<br><span style="opacity:.75">${url}</span>` : "";
-    const locLine = loc ? `<br><span style="opacity:.8">${loc}</span>` : "";
-    return `<b>${dt}</b><br>${pr}${locLine}<br>Lot ${lot}${urlLine}`;
-  });
-
-  const traceSales = {
-    type: "scattergl",
-    mode: "markers",
-    x: xs,
-    y: ys,
-    text: htxt,
-    hoverinfo: "text",
-    name: "Auction sales",
-    marker: { size: 7, opacity: 0.55 }
+  const baseTrace = {
+    x, y, customdata,
+    type:"scattergl",
+    mode:"markers",
+    marker:{size:6, color:"#2f3b63"},
+    hovertemplate,
+    showlegend:false,
+    meta:"pc_base"
   };
 
-  // Engine overlay (series)
-  const serX = [];
-  const serY = [];
-  for(const [m,v] of series){
-    if(Number.isFinite(v)){
-      serX.push(m);
-      serY.push(v);
+  // Build visible lines for chosen engine (rolling + regression)
+  // We don’t need to return both engines here — we already picked one.
+  // But we *do* want the movement UI to show selected engine copy.
+  // We’ll compute rolling series for both (cheap) and toggle visibility.
+
+  // Rolling series (recompute using the same loop as buildBenchmarks but collecting dates/vals)
+  const allM = all.map(r => ({ ...r, _m: monthStartUTC(r.date) }));
+  let startPtr = 0;
+  let endPtr = 0;
+
+  const p50Dates = [], p50Vals = [], p50T = [];
+  const meanDates = [], meanVals = [], meanT = [];
+
+  for(let i=0;i<months.length;i++){
+    const endMonth = months[i];
+    const startMonth = addMonthsUTC(endMonth, -(TRANSPORT_WINDOW_MONTHS - 1));
+
+    while(endPtr < allM.length && allM[endPtr]._m <= endMonth) endPtr++;
+    while(startPtr < allM.length && allM[startPtr]._m < startMonth) startPtr++;
+
+    const win = allM.slice(startPtr, endPtr);
+    if(win.length < MIN_SALES_IN_WINDOW) continue;
+
+    const MIN_SALES_PER_MONTH = 5;
+    const monthCounts = new Map();
+    for(const r of win){
+      const k = monthKeyUTC(r._m);
+      monthCounts.set(k, (monthCounts.get(k) || 0) + 1);
+    }
+
+    const vals = [];
+    const wts  = [];
+    for(const r of win){
+      const v = r.price;
+      if(!Number.isFinite(v)) continue;
+      const k = monthKeyUTC(r._m);
+      const c = monthCounts.get(k) || 1;
+      vals.push(v);
+      wts.push(1 / Math.max(c, MIN_SALES_PER_MONTH));
+    }
+    if(vals.length < MIN_SALES_IN_WINDOW) continue;
+
+    const med = weightedQuantile(vals, wts, 0.5);
+    if(Number.isFinite(med) && med > 0){
+      p50Dates.push(endMonth);
+      p50Vals.push(med);
+      p50T.push(i);
+    }
+
+    let wSum = 0, vwSum = 0;
+    for(let j=0;j<vals.length;j++){
+      wSum += wts[j];
+      vwSum += vals[j] * wts[j];
+    }
+    const mean = (wSum > 0) ? (vwSum / wSum) : NaN;
+    if(Number.isFinite(mean) && mean > 0){
+      meanDates.push(endMonth);
+      meanVals.push(mean);
+      meanT.push(i);
     }
   }
-  const traceEngine = {
-    type: "scatter",
-    mode: "lines",
-    x: serX,
-    y: serY,
-    name: engine === "p50" ? "Rolling p50 (24m)" : "Rolling mean (24m)",
-    hoverinfo: "skip",
-    line: { width: 3 }
-  };
 
-  // Regression overlay
-  const regX = [];
-  const regY = [];
-  if(reg){
-    for(const m of months){
-      const v = regAtMonth(m);
-      if(Number.isFinite(v)){
-        regX.push(m);
-        regY.push(v);
+  const regP50Dates = [], regP50Vals = [];
+  if(regP50){
+    for(let i=0;i<months.length;i++){
+      const v = Math.exp(regP50.a + regP50.b * i);
+      if(Number.isFinite(v) && v > 0){
+        regP50Dates.push(months[i]);
+        regP50Vals.push(v);
       }
     }
   }
-  const traceReg = {
-    type: "scatter",
-    mode: "lines",
-    x: regX,
-    y: regY,
-    name: "Regression (engine)",
-    hoverinfo: "skip",
-    line: { width: 4 }
-  };
 
-  // My artwork point
-  const traceMine = {
-    type: "scatter",
-    mode: "markers",
-    x: [purchaseMonth],
-    y: [price],
-    name: "My Artwork",
-    marker: { size: 12, opacity: 0.95 },
-    hoverinfo: "text",
-    text: [`<b>My Artwork</b><br>${monthKeyUTC(purchaseMonth)}<br>${fmtGBP(price)}`]
-  };
-
-  // Implied FMV now point (at latest month)
-  const traceFMV = {
-    type: "scatter",
-    mode: "markers",
-    x: [monthStartUTC(latestDate)],
-    y: [equivLatest],
-    name: "FMV (implied)",
-    marker: { size: 12, opacity: 0.95 },
-    hoverinfo: "text",
-    text: [`<b>FMV (implied)</b><br>${monthKeyUTC(monthStartUTC(latestDate))}<br>${fmtGBP(equivLatest)}`]
-  };
-
-  const layout = {
-    margin: { l: 60, r: 20, t: 10, b: 50 },
-    xaxis: { title: "Sale date" },
-    yaxis: { title: "Hammer price (GBP)", type: (yScale === "log" ? "log" : "linear") },
-    legend: { orientation: "h" }
-  };
-
-  const config = { responsive: true, displayModeBar: false };
-
-  // Safety: if elChart is missing, avoid throwing (callers can handle plotPromise=null)
-  let plotPromise = null;
-  if(elChart){
-    plotPromise = Plotly.newPlot(
-      elChart,
-      [
-        traceSales,
-        traceEngine, // overlay above dots
-        traceReg,    // regression above series
-        traceMine,
-        ...(Number.isFinite(equivLatest) ? [traceFMV] : [])
-      ],
-      layout,
-      config
-    );
+  const regMeanDates = [], regMeanVals = [];
+  if(regMean){
+    for(let i=0;i<months.length;i++){
+      const v = Math.exp(regMean.a + regMean.b * i);
+      if(Number.isFinite(v) && v > 0){
+        regMeanDates.push(months[i]);
+        regMeanVals.push(v);
+      }
+    }
   }
 
-  return { pct, equivNow: equivLatest, plotPromise, engine };
+  const p50Trace = (p50Dates.length >= 2) ? {
+    x:p50Dates,
+    y:p50Vals,
+    type:"scatter",
+    mode:"lines",
+    line:{width:3.5, color:"rgba(47,59,99,0.45)"},
+    hovertemplate:"24M rolling median (p50)<br>%{x|%b %Y}<br><b>£%{y:,.0f}</b><extra></extra>",
+    showlegend:false,
+    visible:false,
+    meta:"pc_p50_24"
+  } : null;
+
+  const regP50Trace = (regP50Dates.length >= 2) ? {
+    x:regP50Dates,
+    y:regP50Vals,
+    type:"scatter",
+    mode:"lines",
+    line:{width:4.5, color:"rgba(47,59,99,0.90)"},
+    hovertemplate:"Trend line (regression through rolling p50)<br>%{x|%b %Y}<br><b>£%{y:,.0f}</b><extra></extra>",
+    showlegend:false,
+    visible:false,
+    meta:"pc_p50_reg"
+  } : null;
+
+  const meanTrace = (meanDates.length >= 2) ? {
+    x:meanDates,
+    y:meanVals,
+    type:"scatter",
+    mode:"lines",
+    line:{width:3.5, color:"rgba(47,59,99,0.45)"},
+    hovertemplate:"24M rolling mean (arith)<br>%{x|%b %Y}<br><b>£%{y:,.0f}</b><extra></extra>",
+    showlegend:false,
+    visible:false,
+    meta:"pc_mean_24"
+  } : null;
+
+  const regMeanTrace = (regMeanDates.length >= 2) ? {
+    x:regMeanDates,
+    y:regMeanVals,
+    type:"scatter",
+    mode:"lines",
+    line:{width:4.5, color:"rgba(47,59,99,0.90)"},
+    hovertemplate:"Trend line (regression through rolling mean)<br>%{x|%b %Y}<br><b>£%{y:,.0f}</b><extra></extra>",
+    showlegend:false,
+    visible:false,
+    meta:"pc_mean_reg"
+  } : null;
+
+  const myArtworkTrace = Number.isFinite(price) ? {
+    x:[purchaseMonth],
+    y:[price],
+    type:"scattergl",
+    mode:"markers",
+    marker:{size:14, color:"#fee7b1", line:{width:3, color:"#2c3a5c"}},
+    hovertemplate:`My Artwork<br>%{x|%b %Y}<br><b>${fmtGBP(price)}</b><extra></extra>`,
+    showlegend:false,
+    meta:"pc_myartwork"
+  } : null;
+
+  // Revaluation dot on scatter
+  const revalTrace = {
+    x:[monthStartUTC(latestDate)],
+    y:[NaN],
+    type:"scattergl",
+    mode:"markers",
+    marker:{size:12, color:"#2c3a5c"},
+    hovertemplate:"Revaluation<br>%{x|%b %Y}<br><b>£%{y:,.0f}</b><extra></extra>",
+    showlegend:false,
+    visible:false,
+    meta:"pc_reval"
+  };
+
+  const traces = [baseTrace];
+  if(p50Trace) traces.push(p50Trace);
+  if(regP50Trace) traces.push(regP50Trace);
+  if(meanTrace) traces.push(meanTrace);
+  if(regMeanTrace) traces.push(regMeanTrace);
+  if(myArtworkTrace) traces.push(myArtworkTrace);
+  traces.push(revalTrace);
+
+  const plotPromise = Plotly.newPlot(elChart, traces, {
+    margin:{l:56,r:22,t:26,b:48},
+    yaxis:{type:(yScale==="log")?"log":"linear"},
+    xaxis:{type:"date"},
+    hovermode:"closest",
+    paper_bgcolor:"rgba(0,0,0,0)",
+    plot_bgcolor:"rgba(0,0,0,0)"
+  }, {responsive:true, displayModeBar:false});
+
+  // click-through
+  elChart.on?.("plotly_click", (ev) => {
+    const pt = ev?.points?.[0];
+    const url = pt?.customdata?.[2];
+    if(url) window.open(url, "_blank", "noopener,noreferrer");
+  });
+
+  const equivLatest = impliedValueAtWith({
+    all,
+    monthToT,
+    regObj: activeReg,
+    purchaseMonth,
+    targetMonthUTC: monthStartUTC(latestDate),
+    price,
+    TRANSPORT_WINDOW_MONTHS,
+    MIN_SALES_IN_WINDOW
+  });
+
+  const FMV_COPY =
+    "Fair market value is best estimated from the market’s central tendency, not its extremes.\n" +
+    "This module calculates a 24-month rolling benchmark of auction prices and fits a trend line.\n" +
+    (engine === "mean"
+      ? "Because your price point sits closer to the mean trend, we select the arithmetic mean for context against the “My Artwork” price."
+      : "Because your price point sits closer to the median trend, we select the rolling median (p50) for context against the “My Artwork” price.");
+
+  plotPromise.then(() => {
+    const gd = elChart;
+
+    const DARK_DOT  = "#2f3b63";
+    const LIGHT_DOT = "#9bb7e0";
+
+    const data = (gd && gd.data) ? gd.data : [];
+    const idxBase   = data.findIndex(t => t && t.meta === "pc_base");
+    const idxP50    = data.findIndex(t => t && t.meta === "pc_p50_24");
+    const idxP50Reg = data.findIndex(t => t && t.meta === "pc_p50_reg");
+    const idxMean   = data.findIndex(t => t && t.meta === "pc_mean_24");
+    const idxMeanReg= data.findIndex(t => t && t.meta === "pc_mean_reg");
+    const idxRev    = data.findIndex(t => t && t.meta === "pc_reval");
+
+    let btn = document.getElementById("pc-move-toggle");
+    const panel  = document.getElementById("pc-move");
+    const moveEl = document.getElementById("pc-move-chart");
+
+    const optin = document.getElementById("pc-add-target");
+    const box   = document.getElementById("pc-target-ui");
+    const input = document.getElementById("pc-target-month");
+    const hint  = document.getElementById("pc-target-hint");
+
+    const contextEl = document.getElementById("pc-context-text");
+    if(contextEl){
+      contextEl.textContent = FMV_COPY;
+      contextEl.style.whiteSpace = "pre-line";
+    }
+
+    if(!btn || !panel || !moveEl) return;
+
+    // Kill previous click listeners
+    const btnClone = btn.cloneNode(true);
+    btn.parentNode.replaceChild(btnClone, btn);
+    btn = btnClone;
+
+    const monthLabel = (d) =>
+      d.toLocaleString("en-GB", { month:"short", year:"numeric", timeZone:"UTC" });
+
+    const clearTargetUI = () => {
+      if(optin) optin.checked = false;
+      if(box) box.classList.add("hidden");
+      if(input) input.value = "";
+      if(hint) hint.textContent = "";
+    };
+
+    const setRevalDot = (dUTC, val, visible) => {
+      if(idxRev < 0) return;
+      const x = dUTC ? [monthStartUTC(dUTC)] : [monthStartUTC(latestDate)];
+      const y = (Number.isFinite(val)) ? [val] : [NaN];
+      Plotly.restyle(gd, { x, y, visible: !!visible }, [idxRev]);
+    };
+
+    const hideAllLines = () => {
+      if(idxP50    >= 0) Plotly.restyle(gd, { visible:false }, [idxP50]);
+      if(idxP50Reg >= 0) Plotly.restyle(gd, { visible:false }, [idxP50Reg]);
+      if(idxMean   >= 0) Plotly.restyle(gd, { visible:false }, [idxMean]);
+      if(idxMeanReg>= 0) Plotly.restyle(gd, { visible:false }, [idxMeanReg]);
+    };
+
+    const showActiveLines = () => {
+      const useMean = (engine === "mean");
+      if(useMean){
+        if(idxMean    >= 0) Plotly.restyle(gd, { visible:true }, [idxMean]);
+        if(idxMeanReg >= 0) Plotly.restyle(gd, { visible:true }, [idxMeanReg]);
+      } else {
+        if(idxP50     >= 0) Plotly.restyle(gd, { visible:true }, [idxP50]);
+        if(idxP50Reg  >= 0) Plotly.restyle(gd, { visible:true }, [idxP50Reg]);
+      }
+    };
+
+    const applyBaseline = () => {
+      if(idxBase >= 0) Plotly.restyle(gd, { "marker.color": DARK_DOT }, [idxBase]);
+      hideAllLines();
+      setRevalDot(latestDate, NaN, false);
+
+      panel.classList.add("hidden");
+      btn.setAttribute("aria-expanded", "false");
+      const chev = btn.querySelector(".chev");
+      if(chev) chev.textContent = "▾";
+
+      moveEl.innerHTML = "";
+      clearTargetUI();
+    };
+
+    const renderLatest = () => {
+      if(Number.isFinite(equivLatest)){
+        renderMovement(moveEl, {
+          purchaseMonth,
+          targetMonth: monthStartUTC(latestDate),
+          price,
+          equivNow: equivLatest,
+          captionText: hasUserMonth
+            ? "For retrospective valuations, add target month to calculate."
+            : "Add a purchase month to calculate movement (optional).",
+          rightLabel: hasUserMonth ? "Revaluation" : "Context now"
+        });
+      } else {
+        moveEl.innerHTML = "";
+      }
+      setRevalDot(latestDate, equivLatest, true);
+    };
+
+    const applyMovementOn = () => {
+      if(idxBase >= 0) Plotly.restyle(gd, { "marker.color": LIGHT_DOT }, [idxBase]);
+      showActiveLines();
+
+      panel.classList.remove("hidden");
+      btn.setAttribute("aria-expanded", "true");
+      const chev = btn.querySelector(".chev");
+      if(chev) chev.textContent = "▴";
+
+      renderLatest();
+      clearTargetUI();
+    };
+
+    btn.addEventListener("click", () => {
+      const isOpen = btn.getAttribute("aria-expanded") === "true";
+      if(isOpen) applyBaseline();
+      else applyMovementOn();
+    });
+
+    if(optin && box){
+      optin.onchange = () => {
+        const on = !!optin.checked;
+        box.classList.toggle("hidden", !on);
+
+        if(!on){
+          renderLatest();
+          if(hint) hint.textContent = "";
+          if(input) input.value = "";
+          return;
+        }
+
+        if(hint) hint.textContent = "Enter a month in YYYYMM.";
+      };
+    }
+
+    if(input){
+      input.addEventListener("input", () => {
+        if(!optin || !optin.checked) return;
+
+        const d = parseYYYYMM(input.value);
+        if(!d){
+          if(hint) hint.textContent = "Use YYYYMM (e.g. 201906).";
+          return;
+        }
+
+        const minD = months[0];
+        const maxD = months[months.length - 1];
+        const d2 = (d < minD) ? minD : (d > maxD ? maxD : d);
+
+        const equiv = impliedValueAtWith({
+          all,
+          monthToT,
+          regObj: activeReg,
+          purchaseMonth,
+          targetMonthUTC: d2,
+          price,
+          TRANSPORT_WINDOW_MONTHS,
+          MIN_SALES_IN_WINDOW
+        });
+
+        if(!Number.isFinite(equiv)){
+          if(hint) hint.textContent = "Not enough auction activity around one of the selected dates.";
+          setRevalDot(d2, NaN, true);
+          moveEl.innerHTML = "";
+          return;
+        }
+
+        renderMovement(moveEl, {
+          purchaseMonth,
+          targetMonth: d2,
+          price,
+          equivNow: equiv,
+          captionText: "Target month applied.",
+          rightLabel: "Revaluation"
+        });
+
+        setRevalDot(d2, equiv, true);
+        if(hint) hint.textContent = `Target set to ${monthLabel(d2)}.`;
+      });
+    }
+
+    applyBaseline();
+  });
+
+  return { equivNow: equivLatest, plotPromise, engine };
 }
