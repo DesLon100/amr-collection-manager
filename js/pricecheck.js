@@ -490,6 +490,156 @@ export function runPriceCheck({
   const MIN_SALES_IN_WINDOW = 10;
 
   // ------------------------------------------------------------
+// Compute-only (no Plotly): engine + context now + movement
+// ------------------------------------------------------------
+export function computePriceCheckMetrics({
+  workbench,
+  artistId,
+  price,
+  myMonthYYYYMM
+}){
+  const all = workbench.getLotRows()
+    .filter(r => r.id === artistId && Number.isFinite(r.price) && r.date)
+    .sort((a,b)=>a.date-b.date);
+
+  if(all.length < 10) throw new Error("Not enough auction history.");
+
+  const artworkDate = parseYYYYMM(myMonthYYYYMM) || all[all.length-1].date;
+  const purchaseMonth = monthStartUTC(artworkDate);
+  const latestDate  = all[all.length-1].date;
+
+  const TRANSPORT_WINDOW_MONTHS = 24;
+  const MIN_SALES_IN_WINDOW = 10;
+
+  // --- Build rolling p50 + rolling mean + regressions (same as runPriceCheck) ---
+  const months = buildMonthRangeUTC(all[0].date, all[all.length-1].date);
+  const allM = all.map(r => ({ ...r, _m: monthStartUTC(r.date) }));
+
+  let startPtr = 0;
+  let endPtr = 0;
+
+  const p50T = [], p50Vals = [];
+  const meanT = [], meanVals = [];
+  const monthToT = new Map();
+
+  for(let i=0;i<months.length;i++){
+    const endMonth = months[i];
+    const startMonth = addMonthsUTC(endMonth, -(TRANSPORT_WINDOW_MONTHS - 1));
+
+    while(endPtr < allM.length && allM[endPtr]._m <= endMonth) endPtr++;
+    while(startPtr < allM.length && allM[startPtr]._m < startMonth) startPtr++;
+
+    const win = allM.slice(startPtr, endPtr);
+    if(win.length < MIN_SALES_IN_WINDOW) continue;
+
+    const MIN_SALES_PER_MONTH = 5;
+    const monthCounts = new Map();
+    for(const r of win){
+      const k = monthKeyUTC(r._m);
+      monthCounts.set(k, (monthCounts.get(k) || 0) + 1);
+    }
+
+    const vals = [];
+    const wts  = [];
+    for(const r of win){
+      const v = r.price;
+      if(!Number.isFinite(v)) continue;
+      const k = monthKeyUTC(r._m);
+      const c = monthCounts.get(k) || 1;
+      vals.push(v);
+      wts.push(1 / Math.max(c, MIN_SALES_PER_MONTH));
+    }
+    if(vals.length < MIN_SALES_IN_WINDOW) continue;
+
+    const med = weightedQuantile(vals, wts, 0.5);
+    if(!Number.isFinite(med) || med <= 0) continue;
+
+    let wSum = 0, vwSum = 0;
+    for(let j=0;j<vals.length;j++){
+      wSum += wts[j];
+      vwSum += vals[j] * wts[j];
+    }
+    const mean = (wSum > 0) ? (vwSum / wSum) : NaN;
+    if(!Number.isFinite(mean) || mean <= 0) continue;
+
+    p50T.push(i);
+    p50Vals.push(med);
+
+    meanT.push(i);
+    meanVals.push(mean);
+
+    monthToT.set(monthKeyUTC(endMonth), i);
+  }
+
+  const regP50  = (p50T.length  >= 2) ? ols(p50T,  p50Vals.map(v => Math.log(v)))  : null;
+  const regMean = (meanT.length >= 2) ? ols(meanT, meanVals.map(v => Math.log(v))) : null;
+
+  function trendAtPurchase(regObj){
+    const tInput = monthToT.get(monthKeyUTC(purchaseMonth));
+    if(!regObj || !Number.isFinite(tInput)) return NaN;
+    const v = Math.exp(regObj.a + regObj.b * tInput);
+    return (Number.isFinite(v) && v > 0) ? v : NaN;
+  }
+
+  const p50AtPurchase  = trendAtPurchase(regP50);
+  const meanAtPurchase = trendAtPurchase(regMean);
+
+  let engine = "p50";
+  if(Number.isFinite(price) && price > 0){
+    const hasP50  = Number.isFinite(p50AtPurchase);
+    const hasMean = Number.isFinite(meanAtPurchase);
+
+    if(!hasP50 && hasMean) engine = "mean";
+    else if(hasP50 && !hasMean) engine = "p50";
+    else if(hasP50 && hasMean){
+      const dP50  = Math.abs(Math.log(price) - Math.log(p50AtPurchase));
+      const dMean = Math.abs(Math.log(price) - Math.log(meanAtPurchase));
+      engine = (dMean < dP50) ? "mean" : "p50";
+    }
+  }
+
+  const activeReg = (engine === "mean") ? regMean : regP50;
+
+  function impliedValueAtWith(regObj, targetMonthUTC){
+    if(!regObj || !Number.isFinite(price) || price <= 0) return null;
+
+    const tInput  = monthToT.get(monthKeyUTC(purchaseMonth));
+    const tTarget = monthToT.get(monthKeyUTC(monthStartUTC(targetMonthUTC)));
+
+    if(!Number.isFinite(tInput) || !Number.isFinite(tTarget)) return null;
+
+    const winInput  = windowN(all, purchaseMonth, TRANSPORT_WINDOW_MONTHS);
+    const winTarget = windowN(all, monthStartUTC(targetMonthUTC), TRANSPORT_WINDOW_MONTHS);
+
+    if(winInput.length < MIN_SALES_IN_WINDOW || winTarget.length < MIN_SALES_IN_WINDOW) return null;
+
+    const pInput  = Math.exp(regObj.a + regObj.b * tInput);
+    const pTarget = Math.exp(regObj.a + regObj.b * tTarget);
+
+    if(!Number.isFinite(pInput) || !Number.isFinite(pTarget) || pInput <= 0 || pTarget <= 0) return null;
+
+    return price * (pTarget / pInput);
+  }
+
+  const contextNow = impliedValueAtWith(activeReg, monthStartUTC(latestDate));
+
+  // movement % from purchase month -> latest month (only meaningful if user supplied a purchase month)
+  const hasUserMonth = !!parseYYYYMM(myMonthYYYYMM);
+  let movementPct = null;
+  if(hasUserMonth && Number.isFinite(contextNow)){
+    movementPct = ((contextNow / price) - 1) * 100;
+  }
+
+  return {
+    engine,          // "mean" | "p50"
+    contextNow,      // numeric or null
+    movementPct,     // numeric or null
+    latestMonth: monthStartUTC(latestDate)
+  };
+}
+
+  
+  // ------------------------------------------------------------
   // Scatter universe
   // ------------------------------------------------------------
   const x = all.map(r=>r.date);
