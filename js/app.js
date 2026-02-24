@@ -1,4 +1,4 @@
-import { runPriceCheck } from "./pricecheck.js";
+import { runPriceCheck, computePriceCheckMetrics } from "./pricecheck.js";
 import { makeWorkbenchFromLots } from "./amr-workbench.js";
 
 // js/app.js
@@ -251,15 +251,40 @@ function buildAmrFromYourCSV(text){
 let items = loadJSON(STORE_KEY, []);
 let activeId = null;
 
-// keep table lightweight for now (real FMV is calculated in detail view)
 function computeContextStub(item){
+  // default empty
+  let context_now = null;
+  let movement_pct = null;
+  let engineLabel = "—";
+
+  // Only compute if we have AMR data loaded + lots in memory
+  if(!amr.loaded || !amr.lots?.length) return { context_now, movement_pct, engine: engineLabel };
+
+  // Need artist id + price
+  const artistId = String(item.artist_id || "").trim();
   const price = Number(item.purchase_price);
-  if(!Number.isFinite(price) || price <= 0) return { context_now: null, movement_pct: null, engine: "—" };
-  const hasDate = !!parseYYYYMM(item.purchase_month);
-  const engine = (price >= 100000) ? "Mean" : "Median";
-  const context_now = price * (hasDate ? 1.08 : 1.00);
-  const movement_pct = hasDate ? 8 : null;
-  return { context_now, movement_pct, engine };
+  if(!artistId || !Number.isFinite(price) || price <= 0) return { context_now, movement_pct, engine: engineLabel };
+
+  // Movement only if user supplied a purchase month
+  const myMonth = String(item.purchase_month || "").trim();
+
+  try{
+    const workbench = makeWorkbenchFromLots(amr.lots);
+    const m = computePriceCheckMetrics({
+      workbench,
+      artistId,
+      price,
+      myMonthYYYYMM: myMonth
+    });
+
+    engineLabel = (m.engine === "mean") ? "Mean" : "Median";
+    context_now = Number.isFinite(m.contextNow) ? m.contextNow : null;
+    movement_pct = Number.isFinite(m.movementPct) ? m.movementPct : null;
+
+    return { context_now, movement_pct, engine: engineLabel };
+  } catch {
+    return { context_now, movement_pct, engine: engineLabel };
+  }
 }
 
 // ---------- Render ----------
