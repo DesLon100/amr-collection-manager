@@ -4,6 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>AMR Collection Manager</title>
+
+  <!-- Plotly (needed by pricecheck.js) -->
+  <script src="https://cdn.plot.ly/plotly-3.3.0.min.js"></script>
+
   <link rel="stylesheet" href="css/app.css" />
 </head>
 
@@ -22,7 +26,7 @@
       </div>
 
       <div class="topbar-right" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end;">
-        <!-- NEW: Load AMR data -->
+        <!-- Load AMR data -->
         <label class="btn ghost" style="display:inline-flex;align-items:center;gap:8px;cursor:pointer;">
           Load AMR data
           <input id="file-amr" type="file" accept=".csv,text/csv" hidden />
@@ -117,12 +121,9 @@
       <form id="form" class="form">
         <div class="field">
           <label>Artist</label>
-
-          <!-- NEW: driven by AMR dataset -->
           <select id="f-artist" class="input" disabled required>
             <option value="">Load AMR data first…</option>
           </select>
-
           <div class="hint" id="artist-hint">
             Load a CSV export from AMR to populate this list.
           </div>
@@ -194,13 +195,53 @@
           </div>
         </div>
 
+        <!-- Pricecheck embed -->
         <div class="card inset">
           <div class="h2">Market context</div>
-          <p class="muted">
-            Next step: embed the same scatter + benchmark engine from pricecheck for this artist, using stored inputs.
+          <p class="muted" style="margin-top:0;">
+            Auction scatter and benchmark-based context (same engine as AMR Price Check).
           </p>
-          <div class="placeholder">
-            Chart placeholder (hook to pricecheck.js later)
+
+          <!-- Scatter chart target -->
+          <div class="pc-chart-wrap">
+            <div id="pc-universe" class="pc-chart" style="height:360px;"></div>
+          </div>
+
+          <!-- CTA toggle -->
+          <div class="pc-context" style="margin-top:10px;">
+            <button
+              id="pc-move-toggle"
+              class="pc-bands-toggle"
+              type="button"
+              aria-expanded="false">
+              <span>See your price movement</span>
+              <span class="chev">▾</span>
+            </button>
+          </div>
+
+          <!-- Collapsible movement (everything inside here is hidden until opened) -->
+          <div id="pc-move" class="pc-bands hidden">
+            <div id="pc-context-text" class="pc-context-text" style="margin:10px 0 10px;"></div>
+
+            <div id="pc-move-chart" class="pc-bands-chart"></div>
+            <div id="pc-move-caption" class="pc-bands-caption"></div>
+
+            <div class="pc-target-wrap" style="margin-top:10px;">
+              <label class="pc-target-check" style="display:flex;gap:8px;align-items:center;">
+                <input id="pc-add-target" type="checkbox" />
+                <span>Add target month</span>
+              </label>
+
+              <div id="pc-target-ui" class="hidden" style="margin-top:8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                <input
+                  id="pc-target-month"
+                  type="text"
+                  placeholder="YYYYMM (e.g. 201906)"
+                  style="min-width:120px;"
+                />
+                <span class="muted" id="pc-target-hint" style="font-size:12px;"></span>
+              </div>
+            </div>
           </div>
         </div>
 
