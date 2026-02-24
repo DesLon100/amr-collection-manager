@@ -1,27 +1,35 @@
 // js/app.js
-// MVP collection manager: localStorage + dashboard + add/edit + detail view + CSV import/export
+// Collection manager MVP + Load AMR dataset (artist list source)
 
 const STORE_KEY = "amr_collection_v1";
+const AMR_KEY   = "amr_dataset_meta_v1"; // store only what we need for now
 
 const els = {
+  // AMR load
+  fileAmr: document.getElementById("file-amr"),
+  amrStatus: document.getElementById("amr-status"),
+
+  // summary
   sumCount: document.getElementById("sum-count"),
   sumPaid: document.getElementById("sum-paid"),
   sumContext: document.getElementById("sum-context"),
   sumMove: document.getElementById("sum-move"),
 
+  // table
   empty: document.getElementById("empty"),
   tableWrap: document.getElementById("table-wrap"),
   rows: document.getElementById("rows"),
 
+  // actions
   btnAdd: document.getElementById("btn-add"),
   btnAddEmpty: document.getElementById("btn-add-empty"),
   btnExport: document.getElementById("btn-export"),
 
-  fileCsv: document.getElementById("file-csv"),
-
+  // filters
   search: document.getElementById("search"),
   filter: document.getElementById("filter"),
 
+  // drawer
   drawer: document.getElementById("drawer"),
   form: document.getElementById("form"),
   drawerTitle: document.getElementById("drawer-title"),
@@ -32,7 +40,9 @@ const els = {
   fTitle: document.getElementById("f-title"),
   fNotes: document.getElementById("f-notes"),
   btnSave: document.getElementById("btn-save"),
+  artistHint: document.getElementById("artist-hint"),
 
+  // detail
   detail: document.getElementById("detail"),
   dTitle: document.getElementById("d-title"),
   dSub: document.getElementById("d-sub"),
@@ -69,7 +79,7 @@ function monthLabel(s){
   return d.toLocaleString("en-GB", { month:"short", year:"numeric", timeZone:"UTC" });
 }
 
-function load(){
+function loadCollection(){
   try{
     const raw = localStorage.getItem(STORE_KEY);
     const parsed = raw ? JSON.parse(raw) : null;
@@ -78,31 +88,23 @@ function load(){
   return [];
 }
 
-function save(items){
+function saveCollection(items){
   localStorage.setItem(STORE_KEY, JSON.stringify(items));
 }
 
-// ---------- FMV placeholder hook ----------
-function computeContextStub(item){
-  const price = Number(item.purchase_price);
-  if(!Number.isFinite(price) || price <= 0) return { context_now: null, movement_pct: null, engine: "—" };
-
-  const hasDate = !!parseYYYYMM(item.purchase_month);
-  const engine = (price >= 100000) ? "Mean" : "Median";
-  const context_now = price * (hasDate ? 1.08 : 1.00);
-  const movement_pct = hasDate ? 8 : null;
-  return { context_now, movement_pct, engine };
+function loadAmrMeta(){
+  try{
+    const raw = localStorage.getItem(AMR_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch(e){}
+  return null;
 }
 
-// ---------- CSV parsing ----------
-function normalizeHeader(h){
-  return String(h || "")
-    .trim()
-    .toLowerCase()
-    .replaceAll(" ", "_");
+function saveAmrMeta(meta){
+  localStorage.setItem(AMR_KEY, JSON.stringify(meta));
 }
 
-// Minimal CSV parser with quoted fields support
+// ---------- CSV parsing (quoted fields supported) ----------
 function parseCSV(text){
   const rows = [];
   let row = [];
@@ -114,131 +116,151 @@ function parseCSV(text){
     const next = text[i+1];
 
     if(inQuotes){
-      if(ch === '"' && next === '"'){ // escaped quote
-        cur += '"';
-        i++;
-      } else if(ch === '"'){
-        inQuotes = false;
-      } else {
-        cur += ch;
-      }
+      if(ch === '"' && next === '"'){ cur += '"'; i++; }
+      else if(ch === '"'){ inQuotes = false; }
+      else { cur += ch; }
       continue;
     }
 
-    if(ch === '"'){
-      inQuotes = true;
-      continue;
-    }
-
-    if(ch === ","){
-      row.push(cur);
-      cur = "";
-      continue;
-    }
-
-    if(ch === "\n"){
-      row.push(cur);
-      rows.push(row);
-      row = [];
-      cur = "";
-      continue;
-    }
-
-    if(ch === "\r"){
-      continue;
-    }
-
+    if(ch === '"'){ inQuotes = true; continue; }
+    if(ch === ","){ row.push(cur); cur=""; continue; }
+    if(ch === "\n"){ row.push(cur); rows.push(row); row=[]; cur=""; continue; }
+    if(ch === "\r"){ continue; }
     cur += ch;
   }
-
-  // last field
   row.push(cur);
   rows.push(row);
 
-  // remove trailing empty line
-  if(rows.length && rows[rows.length-1].every(v => String(v).trim() === "")){
-    rows.pop();
-  }
-
+  if(rows.length && rows[rows.length-1].every(v => String(v).trim()==="")) rows.pop();
   return rows;
+}
+
+function normalizeHeader(h){
+  return String(h || "").trim().toLowerCase().replaceAll(" ", "_");
 }
 
 function toNumberLoose(v){
   const s = String(v ?? "").trim();
   if(!s) return NaN;
-  // allow "£25,000"
   const cleaned = s.replaceAll("£","").replaceAll(",","").trim();
   const n = Number(cleaned);
   return Number.isFinite(n) ? n : NaN;
 }
 
-function importCSVText(text){
-  const grid = parseCSV(text);
-  if(grid.length < 2) return { added:0, skipped:0, errors:["CSV needs a header row plus at least one data row."] };
+// ---------- AMR dataset handling ----------
+let amr = {
+  loaded: false,
+  artistList: [],  // ["A R Penck", "Gerhard Richter", ...]
+  artistCount: 0,
+  rowCount: 0,
+};
 
-  const header = grid[0].map(normalizeHeader);
-  const idx = (name) => header.indexOf(name);
+function cleanArtistName(s){
+  let t = String(s || "").trim();
+  if(!t) return "";
 
-  // support a few header aliases
-  const iArtist = idx("artist") >= 0 ? idx("artist") : idx("artist_name");
-  const iPrice  = idx("purchase_price") >= 0 ? idx("purchase_price") : idx("price");
-  const iMonth  = idx("purchase_month") >= 0 ? idx("purchase_month") : idx("month");
-  const iTitle  = idx("title");
-  const iNotes  = idx("notes");
+  // If you have "Name (12345)" or "Name [id]" patterns, strip trailing id blocks
+  t = t.replace(/\s*[\(\[]\s*\d+\s*[\)\]]\s*$/g, "").trim();
 
-  const errors = [];
-  if(iArtist < 0) errors.push('Missing required column: "artist"');
-  if(iPrice  < 0) errors.push('Missing required column: "purchase_price" (or "price")');
-  if(errors.length) return { added:0, skipped:0, errors };
-
-  let added = 0, skipped = 0;
-
-  for(let r=1;r<grid.length;r++){
-    const line = grid[r];
-    const artist = String(line[iArtist] ?? "").trim();
-    const price = toNumberLoose(line[iPrice]);
-
-    const monthRaw = (iMonth >= 0) ? String(line[iMonth] ?? "").trim() : "";
-    const month = monthRaw ? monthRaw.replaceAll("-","").replaceAll("/","").trim() : "";
-
-    const title = (iTitle >= 0) ? String(line[iTitle] ?? "").trim() : "";
-    const notes = (iNotes >= 0) ? String(line[iNotes] ?? "").trim() : "";
-
-    if(!artist || !Number.isFinite(price) || price <= 0){
-      skipped++;
-      continue;
-    }
-    if(month && !parseYYYYMM(month)){
-      // invalid date → keep blank rather than fail import
-      // (we don't want users to get blocked)
-      // you can tighten later if you want
-    }
-
-    items.unshift({
-      id: uid(),
-      artist,
-      purchase_price: price,
-      purchase_month: parseYYYYMM(month) ? month : "",
-      title,
-      notes,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
-    });
-    added++;
-  }
-
-  save(items);
-  return { added, skipped, errors:[] };
+  // collapse whitespace
+  t = t.replace(/\s+/g, " ").trim();
+  return t;
 }
 
-// ---------- State ----------
-let items = load();
+function detectArtistColumn(headers){
+  const h = headers;
+
+  const prefer = ["artist", "artist_name", "artistname", "name", "artistn"];
+  for(const key of prefer){
+    const i = h.indexOf(key);
+    if(i >= 0) return i;
+  }
+
+  // common AMR-ish variants
+  const variants = ["artistdisplay", "artist_display", "fullname"];
+  for(const key of variants){
+    const i = h.indexOf(key);
+    if(i >= 0) return i;
+  }
+
+  return -1;
+}
+
+function buildArtistListFromAmrCSV(text){
+  const grid = parseCSV(text);
+  if(grid.length < 2) throw new Error("CSV needs a header row and at least one data row.");
+
+  const headers = grid[0].map(normalizeHeader);
+  const artistIdx = detectArtistColumn(headers);
+  if(artistIdx < 0){
+    throw new Error('Could not find an artist column. Expected headers like "Artist" / "artist" / "Name".');
+  }
+
+  const set = new Set();
+  let rowCount = 0;
+
+  for(let r=1;r<grid.length;r++){
+    const row = grid[r];
+    rowCount++;
+
+    const rawArtist = row[artistIdx];
+    const name = cleanArtistName(rawArtist);
+    if(name) set.add(name);
+  }
+
+  const list = Array.from(set);
+  list.sort((a,b)=> a.localeCompare(b, "en", { sensitivity:"base" }));
+
+  return { list, rowCount };
+}
+
+function updateAmrStatus(){
+  if(!els.amrStatus) return;
+  if(!amr.loaded){
+    els.amrStatus.textContent = "No dataset loaded.";
+    return;
+  }
+  els.amrStatus.textContent = `Loaded AMR data: ${amr.artistCount.toLocaleString("en-GB")} artists · ${amr.rowCount.toLocaleString("en-GB")} rows`;
+}
+
+function populateArtistSelect(){
+  if(!els.fArtist) return;
+
+  if(!amr.loaded || !amr.artistList.length){
+    els.fArtist.innerHTML = `<option value="">Load AMR data first…</option>`;
+    els.fArtist.disabled = true;
+    if(els.artistHint) els.artistHint.textContent = "Load a CSV export from AMR to populate this list.";
+    return;
+  }
+
+  const opts = [`<option value="">Select an artist…</option>`]
+    .concat(amr.artistList.map(a => `<option value="${escapeHTML(a)}">${escapeHTML(a)}</option>`));
+
+  els.fArtist.innerHTML = opts.join("");
+  els.fArtist.disabled = false;
+  if(els.artistHint) els.artistHint.textContent = "This list comes from your loaded AMR dataset.";
+}
+
+// ---------- FMV placeholder (same as before) ----------
+function computeContextStub(item){
+  const price = Number(item.purchase_price);
+  if(!Number.isFinite(price) || price <= 0) return { context_now: null, movement_pct: null, engine: "—" };
+
+  const hasDate = !!parseYYYYMM(item.purchase_month);
+  const engine = (price >= 100000) ? "Mean" : "Median";
+  const context_now = price * (hasDate ? 1.08 : 1.00);
+  const movement_pct = hasDate ? 8 : null;
+  return { context_now, movement_pct, engine };
+}
+
+// ---------- UI state ----------
+let items = loadCollection();
 let activeId = null;
 
 // ---------- Render ----------
 function applyFilters(list){
-  const q = String(els.search.value || "").trim().toLowerCase();
-  const f = String(els.filter.value || "all");
+  const q = String(els.search?.value || "").trim().toLowerCase();
+  const f = String(els.filter?.value || "all");
 
   return list.filter(it => {
     const text = `${it.artist} ${it.title || ""}`.toLowerCase();
@@ -319,11 +341,25 @@ function openDrawer(mode, item=null){
   els.drawer.classList.remove("hidden");
   els.drawer.setAttribute("aria-hidden", "false");
 
+  // ensure artist select reflects current dataset
+  populateArtistSelect();
+
   if(mode === "edit" && item){
     els.drawerTitle.textContent = "Edit artwork";
     els.btnSave.textContent = "Save changes";
     els.fId.value = item.id;
-    els.fArtist.value = item.artist || "";
+
+    // select value if present in list; else fallback to a single option
+    const exists = amr.artistList.includes(item.artist);
+    if(exists){
+      els.fArtist.value = item.artist;
+    } else {
+      // if someone loaded collection before dataset, preserve their artist string
+      els.fArtist.innerHTML = `<option value="${escapeHTML(item.artist)}">${escapeHTML(item.artist)}</option>` + els.fArtist.innerHTML;
+      els.fArtist.value = item.artist;
+      els.fArtist.disabled = false;
+    }
+
     els.fPrice.value = item.purchase_price ?? "";
     els.fMonth.value = item.purchase_month || "";
     els.fTitle.value = item.title || "";
@@ -380,6 +416,7 @@ document.querySelectorAll("[data-close-detail='1']").forEach(el=>{
   el.addEventListener("click", closeDetail);
 });
 
+// Save add/edit
 els.form?.addEventListener("submit", (e)=>{
   e.preventDefault();
 
@@ -390,7 +427,7 @@ els.form?.addEventListener("submit", (e)=>{
   const title = String(els.fTitle.value || "").trim();
   const notes = String(els.fNotes.value || "").trim();
 
-  if(!artist) return alert("Artist name is required.");
+  if(!artist) return alert("Please select an artist.");
   if(!Number.isFinite(price) || price <= 0) return alert("Please enter a valid price.");
   if(month && !parseYYYYMM(month)) return alert("Purchase month must be YYYYMM (e.g. 202411).");
 
@@ -420,7 +457,7 @@ els.form?.addEventListener("submit", (e)=>{
     });
   }
 
-  save(items);
+  saveCollection(items);
   closeDrawer();
   render();
 });
@@ -428,7 +465,7 @@ els.form?.addEventListener("submit", (e)=>{
 els.search?.addEventListener("input", ()=> render());
 els.filter?.addEventListener("change", ()=> render());
 
-// Export CSV
+// Export collection CSV (not AMR lots)
 els.btnExport?.addEventListener("click", ()=>{
   const header = ["artist","title","purchase_price","purchase_month","notes"];
   const lines = [header.join(",")];
@@ -452,36 +489,72 @@ els.btnExport?.addEventListener("click", ()=>{
   URL.revokeObjectURL(url);
 });
 
-// Import CSV
-els.fileCsv?.addEventListener("change", async (e)=>{
+// ---------- Load AMR CSV ----------
+els.fileAmr?.addEventListener("change", async (e) => {
   const file = e.target.files?.[0];
   if(!file) return;
 
   try{
     const text = await file.text();
-    const res = importCSVText(text);
+    const { list, rowCount } = buildArtistListFromAmrCSV(text);
 
-    if(res.errors?.length){
-      alert("Import failed:\n\n" + res.errors.join("\n"));
-    } else {
-      alert(`Imported ${res.added} artworks.\nSkipped ${res.skipped} rows (missing artist/price).`);
-      render();
-    }
+    amr.loaded = true;
+    amr.artistList = list;
+    amr.artistCount = list.length;
+    amr.rowCount = rowCount;
+
+    saveAmrMeta({
+      loaded: true,
+      artistList: list,
+      artistCount: list.length,
+      rowCount
+    });
+
+    updateAmrStatus();
+    populateArtistSelect();
+    alert(`Loaded AMR dataset.\n\nArtists: ${list.length}\nRows: ${rowCount}`);
   } catch(err){
-    alert("Could not read CSV.");
+    alert(`Could not load AMR CSV.\n\n${err?.message || "Unknown error"}`);
   } finally {
-    // reset input so the same file can be re-selected
-    els.fileCsv.value = "";
+    els.fileAmr.value = "";
   }
 });
 
-// Seed demo data — comment out if you want blank start
-if(items.length === 0){
-  items = [
-    { id: uid(), artist:"Andreas Achenbach", title:"(optional title)", purchase_price:25000, purchase_month:"", notes:"No date → context only", created_at:new Date().toISOString(), updated_at:new Date().toISOString() },
-    { id: uid(), artist:"A R Penck", title:"U2D work", purchase_price:3445, purchase_month:"202001", notes:"Has date → movement", created_at:new Date().toISOString(), updated_at:new Date().toISOString() },
-  ];
-  save(items);
-}
+// ---------- Detail actions ----------
+els.dEdit?.addEventListener("click", ()=>{
+  if(!activeId) return;
+  const item = items.find(x => x.id === activeId);
+  if(!item) return;
+  closeDetail();
+  openDrawer("edit", item);
+});
 
-render();
+els.dDelete?.addEventListener("click", ()=>{
+  if(!activeId) return;
+  const item = items.find(x => x.id === activeId);
+  if(!item) return;
+
+  const ok = confirm(`Remove "${item.artist}${item.title ? " · " + item.title : ""}"?`);
+  if(!ok) return;
+
+  items = items.filter(x => x.id !== activeId);
+  saveCollection(items);
+  closeDetail();
+  render();
+});
+
+// ---------- Init ----------
+(function init(){
+  // hydrate AMR meta if previously loaded
+  const meta = loadAmrMeta();
+  if(meta?.loaded && Array.isArray(meta.artistList) && meta.artistList.length){
+    amr.loaded = true;
+    amr.artistList = meta.artistList;
+    amr.artistCount = meta.artistCount || meta.artistList.length;
+    amr.rowCount = meta.rowCount || 0;
+  }
+
+  updateAmrStatus();
+  populateArtistSelect();
+  render();
+})();
