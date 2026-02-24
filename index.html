@@ -21,16 +21,18 @@
         </div>
       </div>
 
-      <div class="topbar-right">
-        <button id="btn-add" class="btn primary">Add artwork</button>
-
-        <!-- NEW: Import CSV -->
+      <div class="topbar-right" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end;">
+        <!-- NEW: Load AMR data -->
         <label class="btn ghost" style="display:inline-flex;align-items:center;gap:8px;cursor:pointer;">
-          Import CSV
-          <input id="file-csv" type="file" accept=".csv,text/csv" hidden />
+          Load AMR data
+          <input id="file-amr" type="file" accept=".csv,text/csv" hidden />
         </label>
+        <div id="amr-status" class="muted" style="font-size:12px;max-width:320px;">
+          No dataset loaded.
+        </div>
 
-        <button id="btn-export" class="btn ghost">Export CSV</button>
+        <button id="btn-add" class="btn primary">Add artwork</button>
+        <button id="btn-export" class="btn ghost">Export Collection CSV</button>
       </div>
     </header>
 
@@ -47,12 +49,12 @@
       <div class="card tile">
         <div class="tile-label">Market context now</div>
         <div id="sum-context" class="tile-value">—</div>
-        <div class="tile-note">benchmark-based</div>
+        <div class="tile-note">benchmark-based (hook later)</div>
       </div>
       <div class="card tile">
         <div class="tile-label">12-month movement</div>
         <div id="sum-move" class="tile-value">—</div>
-        <div class="tile-note">only where date exists</div>
+        <div class="tile-note">only where date exists (hook later)</div>
       </div>
     </section>
 
@@ -114,9 +116,16 @@
 
       <form id="form" class="form">
         <div class="field">
-          <label>Artist name</label>
-          <input id="f-artist" class="input" placeholder="e.g. Gerhard Richter" required />
-          <div class="hint">Later: hook to your artist list / IDs. For MVP we store text.</div>
+          <label>Artist</label>
+
+          <!-- NEW: driven by AMR dataset -->
+          <select id="f-artist" class="input" disabled required>
+            <option value="">Load AMR data first…</option>
+          </select>
+
+          <div class="hint" id="artist-hint">
+            Load a CSV export from AMR to populate this list.
+          </div>
         </div>
 
         <div class="grid2">
