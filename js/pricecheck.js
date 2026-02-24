@@ -404,7 +404,7 @@ function renderMovement(el, {
     }
   ];
 
-  Plotly.newPlot(el, [
+   Plotly.newPlot(el, [
     // baseline rail
     {
       x:[minX, maxX], y:[0,0],
@@ -423,7 +423,7 @@ function renderMovement(el, {
       showlegend:false
     },
 
-    // Right-hand dot (date positioned)
+    // Revaluation dot (date positioned)
     {
       x:[x1], y:[0],
       mode:"markers",
@@ -432,7 +432,9 @@ function renderMovement(el, {
       showlegend:false
     }
   ],{
-    margin:{l:22,r:22,t:62,b:38},
+    /* more side + bottom room so bubbles + year labels don't clip */
+    margin:{l:34,r:34,t:64,b:56},
+
     xaxis:{
       type:"date",
       range:[minX, maxX],
@@ -442,8 +444,11 @@ function renderMovement(el, {
       ticks:"outside",
       ticklen:4,
       tickformat:"%Y",
-      dtick:"M24"
+      dtick:"M24",
+      automargin:true,
+      showticklabels:true
     },
+
     yaxis:{visible:false, range:[-1.2, 0.9]},
     annotations: ann,
     paper_bgcolor:"rgba(0,0,0,0)",
