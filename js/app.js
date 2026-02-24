@@ -403,14 +403,38 @@ function openDetail(id){
   try{
     const workbench = makeWorkbenchFromLots(amr.lots);
 
-    const { equivNow, engine } = runPriceCheck({
-      workbench,
-      artistId: String(item.artist_id),
-      price: Number(item.purchase_price),
-      myMonthYYYYMM: String(item.purchase_month || ""), // empty is allowed
-      yScale: "linear",
-      elChart
-    });
+    // default scale for detail view
+let yScale = "linear";
+
+const { equivNow, engine } = runPriceCheck({
+  workbench,
+  artistId: String(item.artist_id),
+  price: Number(item.purchase_price),
+  myMonthYYYYMM: String(item.purchase_month || ""),
+  yScale,
+  elChart
+});
+
+// Update header tiles
+els.dEngine.textContent = (engine === "mean") ? "Mean" : "Median";
+els.dContext.textContent = Number.isFinite(equivNow) ? fmtGBP(equivNow) : "—";
+
+// --- Linear/Log toggle (restyle existing chart) ---
+const logInput = document.getElementById("pc-log");
+if(logInput && elChart){
+  // reset state each time detail opens
+  logInput.checked = (yScale === "log");
+
+  // kill old listeners by cloning (prevents duplicates when opening multiple artworks)
+  const clone = logInput.cloneNode(true);
+  logInput.parentNode.replaceChild(clone, logInput);
+
+  clone.addEventListener("change", () => {
+    yScale = clone.checked ? "log" : "linear";
+    // Relayout only — no recompute, no redraw of traces needed
+    Plotly.relayout(elChart, { "yaxis.type": yScale });
+  });
+}
 
     els.dEngine.textContent = (engine === "mean") ? "Mean" : "Median";
     els.dContext.textContent = Number.isFinite(equivNow) ? fmtGBP(equivNow) : "—";
