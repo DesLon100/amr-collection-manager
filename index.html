@@ -203,9 +203,22 @@
           </p>
 
           <!-- Scatter chart target -->
-          <div class="pc-chart-wrap">
-            <div id="pc-universe" class="pc-chart" style="height:360px;"></div>
-          </div>
+         <!-- Scatter + scale toggle -->
+<div class="pc-chart-wrap">
+
+  <div class="pc-toggle-section" style="padding:6px 0 2px;">
+    <div class="pc-toggle-row" style="justify-content:center;">
+      <span class="muted">Linear</span>
+      <label class="switch">
+        <input id="pc-log" type="checkbox" />
+        <span class="slider"></span>
+      </label>
+      <span class="muted">Log</span>
+    </div>
+  </div>
+
+  <div id="pc-universe" class="pc-chart" style="height:360px;"></div>
+</div>
 
           <!-- CTA toggle -->
           <div class="pc-context" style="margin-top:10px;">
