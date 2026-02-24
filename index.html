@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AMR Collection Manager</title>
+  <link rel="stylesheet" href="css/app.css" />
+</head>
+
+<body>
+  <div class="wrap">
+    <!-- Top bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="brand">
+          <div class="brand-mark">AMR</div>
+          <div class="brand-text">
+            <div class="brand-title">Collection Manager</div>
+            <div class="brand-sub">Serious market context for owned artworks</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <button id="btn-add" class="btn primary">Add artwork</button>
+        <button id="btn-export" class="btn ghost">Export CSV</button>
+      </div>
+    </header>
+
+    <!-- Summary strip -->
+    <section class="summary">
+      <div class="card tile">
+        <div class="tile-label">Artworks</div>
+        <div id="sum-count" class="tile-value">0</div>
+      </div>
+      <div class="card tile">
+        <div class="tile-label">Total paid</div>
+        <div id="sum-paid" class="tile-value">£0</div>
+      </div>
+      <div class="card tile">
+        <div class="tile-label">Market context now</div>
+        <div id="sum-context" class="tile-value">—</div>
+        <div class="tile-note">benchmark-based</div>
+      </div>
+      <div class="card tile">
+        <div class="tile-label">12-month movement</div>
+        <div id="sum-move" class="tile-value">—</div>
+        <div class="tile-note">only where date exists</div>
+      </div>
+    </section>
+
+    <!-- Main table -->
+    <main class="card main">
+      <div class="main-head">
+        <div>
+          <h1 class="h1">My collection</h1>
+          <p class="muted">Add artworks to keep a structured view of market context over time. No documents required.</p>
+        </div>
+
+        <div class="main-actions">
+          <input id="search" class="input" placeholder="Search artist / title…" />
+          <select id="filter" class="input">
+            <option value="all">All</option>
+            <option value="needs_date">Needs date</option>
+            <option value="complete">Complete</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="empty" class="empty hidden">
+        <div class="empty-title">Add your first artwork</div>
+        <div class="empty-sub">Track market context over time — optional title, optional receipt, no validation gate.</div>
+        <button id="btn-add-empty" class="btn primary">Add artwork</button>
+      </div>
+
+      <div id="table-wrap" class="table-wrap">
+        <table class="table" aria-label="Collection table">
+          <thead>
+            <tr>
+              <th>Artwork</th>
+              <th class="right">Purchase price</th>
+              <th>Purchase month</th>
+              <th class="right">Context now</th>
+              <th class="right">Movement</th>
+              <th>Engine</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <!-- Slide-over: Add/Edit artwork -->
+  <div id="drawer" class="drawer hidden" aria-hidden="true">
+    <div class="drawer-backdrop" data-close="1"></div>
+    <aside class="drawer-panel" role="dialog" aria-modal="true" aria-label="Add artwork">
+      <div class="drawer-head">
+        <div>
+          <div id="drawer-title" class="drawer-title">Add artwork</div>
+          <div class="drawer-sub muted">Store a record. We’ll compute market context automatically.</div>
+        </div>
+        <button class="iconbtn" data-close="1" aria-label="Close">✕</button>
+      </div>
+
+      <form id="form" class="form">
+        <div class="field">
+          <label>Artist name</label>
+          <input id="f-artist" class="input" placeholder="e.g. Gerhard Richter" required />
+          <div class="hint">Later: hook to your artist list / IDs. For MVP we store text.</div>
+        </div>
+
+        <div class="grid2">
+          <div class="field">
+            <label>Price (£)</label>
+            <input id="f-price" class="input" type="number" min="0" step="1" placeholder="e.g. 25000" required />
+          </div>
+
+          <div class="field">
+            <label>Purchase month (optional)</label>
+            <input id="f-month" class="input" placeholder="YYYYMM (e.g. 202411)" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Title (optional)</label>
+          <input id="f-title" class="input" placeholder="e.g. Abstract painting, 2013" />
+        </div>
+
+        <div class="field">
+          <label>Notes (optional)</label>
+          <textarea id="f-notes" class="input" rows="3" placeholder="Anything you want to remember…"></textarea>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="field">
+          <label>Uploads (optional)</label>
+          <div class="uploadbox">
+            <div class="muted">Receipts/images are optional. We don’t validate ownership.</div>
+            <button type="button" class="btn ghost" disabled title="Coming soon">Upload file (soon)</button>
+          </div>
+        </div>
+
+        <div class="drawer-actions">
+          <button id="btn-save" class="btn primary" type="submit">Add to my collection</button>
+          <button class="btn ghost" type="button" data-close="1">Cancel</button>
+        </div>
+
+        <input id="f-id" type="hidden" />
+      </form>
+    </aside>
+  </div>
+
+  <!-- Slide-over: Artwork detail -->
+  <div id="detail" class="drawer hidden" aria-hidden="true">
+    <div class="drawer-backdrop" data-close-detail="1"></div>
+    <aside class="drawer-panel" role="dialog" aria-modal="true" aria-label="Artwork detail">
+      <div class="drawer-head">
+        <div>
+          <div id="d-title" class="drawer-title">Artwork</div>
+          <div id="d-sub" class="drawer-sub muted">—</div>
+        </div>
+        <button class="iconbtn" data-close-detail="1" aria-label="Close">✕</button>
+      </div>
+
+      <div class="detail-body">
+        <div class="card inset">
+          <div class="kv">
+            <div>
+              <div class="k">Purchase price</div>
+              <div id="d-price" class="v">—</div>
+            </div>
+            <div>
+              <div class="k">Purchase month</div>
+              <div id="d-month" class="v">—</div>
+            </div>
+            <div>
+              <div class="k">Context now</div>
+              <div id="d-context" class="v">—</div>
+            </div>
+            <div>
+              <div class="k">Engine</div>
+              <div id="d-engine" class="v">—</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card inset">
+          <div class="h2">Market context</div>
+          <p class="muted">
+            Next step: embed the same scatter + benchmark engine from pricecheck for this artist, using stored inputs.
+          </p>
+          <div class="placeholder">
+            Chart placeholder (hook to pricecheck.js later)
+          </div>
+        </div>
+
+        <div class="card inset">
+          <div class="h2">Actions</div>
+          <div class="row">
+            <button id="d-edit" class="btn primary">Edit</button>
+            <button id="d-delete" class="btn danger">Remove</button>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
