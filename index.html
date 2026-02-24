@@ -23,6 +23,13 @@
 
       <div class="topbar-right">
         <button id="btn-add" class="btn primary">Add artwork</button>
+
+        <!-- NEW: Import CSV -->
+        <label class="btn ghost" style="display:inline-flex;align-items:center;gap:8px;cursor:pointer;">
+          Import CSV
+          <input id="file-csv" type="file" accept=".csv,text/csv" hidden />
+        </label>
+
         <button id="btn-export" class="btn ghost">Export CSV</button>
       </div>
     </header>
@@ -132,16 +139,6 @@
         <div class="field">
           <label>Notes (optional)</label>
           <textarea id="f-notes" class="input" rows="3" placeholder="Anything you want to remember…"></textarea>
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="field">
-          <label>Uploads (optional)</label>
-          <div class="uploadbox">
-            <div class="muted">Receipts/images are optional. We don’t validate ownership.</div>
-            <button type="button" class="btn ghost" disabled title="Coming soon">Upload file (soon)</button>
-          </div>
         </div>
 
         <div class="drawer-actions">
