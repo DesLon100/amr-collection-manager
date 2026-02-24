@@ -1,8 +1,6 @@
 // js/app.js
-
 import { runPriceCheck, computePriceCheckMetrics } from "./pricecheck.js";
 import { makeWorkbenchFromLots } from "./amr-workbench.js";
-
 
 const STORE_KEY = "amr_collection_v2";
 const AMR_META_KEY = "amr_dataset_meta_v2";
@@ -326,13 +324,13 @@ function render(){
 
   const view = applyFilters(enriched);
 
-  
   els.rows.innerHTML = view.map(it => {
     const artist = it.artist_name || it.artist || "—";
     const hasDate = !!parseYYYYMM(it.purchase_month);
     const status = hasDate ? `<span class="badge ok">Complete</span>` : `<span class="badge warn">Needs date</span>`;
     const movement = Number.isFinite(it.movement_pct) ? `${Math.round(it.movement_pct)}%` : "—";
     const title = it.title ? ` <span class="muted">·</span> <span class="muted">${escapeHTML(it.title)}</span>` : "";
+
     return `
       <tr data-id="${it.id}">
         <td>
@@ -420,7 +418,6 @@ function openDetail(id){
   const elChart = document.getElementById("pc-universe");
 
   if(!amr.loaded || !amr.lots.length){
-    // Still show detail, but explain why chart can't render yet
     els.dContext.textContent = "—";
     els.dEngine.textContent = "—";
     if(elChart) elChart.innerHTML = `<div class="muted" style="padding:10px;">Load AMR data to render this chart.</div>`;
@@ -431,40 +428,38 @@ function openDetail(id){
     const workbench = makeWorkbenchFromLots(amr.lots);
 
     // default scale for detail view
-let yScale = "linear";
+    let yScale = "linear";
 
-const { equivNow, engine } = runPriceCheck({
-  workbench,
-  artistId: String(item.artist_id),
-  price: Number(item.purchase_price),
-  myMonthYYYYMM: String(item.purchase_month || ""),
-  yScale,
-  elChart
-});
+    const { equivNow, engine } = runPriceCheck({
+      workbench,
+      artistId: String(item.artist_id),
+      price: Number(item.purchase_price),
+      myMonthYYYYMM: String(item.purchase_month || ""),
+      yScale,
+      elChart
+    });
 
-// Update header tiles
-els.dEngine.textContent = (engine === "mean") ? "Mean" : "Median";
-els.dContext.textContent = Number.isFinite(equivNow) ? fmtGBP(equivNow) : "—";
-
-// --- Linear/Log toggle (restyle existing chart) ---
-const logInput = document.getElementById("pc-log");
-if(logInput && elChart){
-  // reset state each time detail opens
-  logInput.checked = (yScale === "log");
-
-  // kill old listeners by cloning (prevents duplicates when opening multiple artworks)
-  const clone = logInput.cloneNode(true);
-  logInput.parentNode.replaceChild(clone, logInput);
-
-  clone.addEventListener("change", () => {
-    yScale = clone.checked ? "log" : "linear";
-    // Relayout only — no recompute, no redraw of traces needed
-    Plotly.relayout(elChart, { "yaxis.type": yScale });
-  });
-}
-
+    // Update header tiles (ONLY ONCE)
     els.dEngine.textContent = (engine === "mean") ? "Mean" : "Median";
     els.dContext.textContent = Number.isFinite(equivNow) ? fmtGBP(equivNow) : "—";
+
+    // --- Linear/Log toggle (restyle existing chart) ---
+    const logInput = document.getElementById("pc-log");
+
+    if(logInput && elChart){
+      // reset state on each open (default linear)
+      logInput.checked = (yScale === "log");
+
+      // kill old listeners by cloning
+      const clone = logInput.cloneNode(true);
+      logInput.parentNode.replaceChild(clone, logInput);
+
+      clone.addEventListener("change", () => {
+        yScale = clone.checked ? "log" : "linear";
+        Plotly.relayout(elChart, { "yaxis.type": yScale });
+      });
+    }
+
   } catch(err){
     els.dContext.textContent = "—";
     els.dEngine.textContent = "—";
@@ -588,6 +583,9 @@ els.fileAmr?.addEventListener("change", async (e) => {
     updateAmrStatus();
     populateArtistSelect();
     alert(`Loaded AMR dataset.\n\nArtists: ${artistList.length}\nRows: ${rowCount}`);
+
+    // Re-render table now that computeContextStub can compute real metrics
+    render();
   } catch(err){
     alert(`Could not load AMR CSV.\n\n${err?.message || "Unknown error"}`);
   } finally {
@@ -627,7 +625,7 @@ els.dDelete?.addEventListener("click", ()=>{
     amr.artistList = meta.artistList;
     amr.artistCount = meta.artistCount || meta.artistList.length;
     amr.rowCount = meta.rowCount || 0;
-    amr.lots = []; // user must re-load CSV each session to render charts
+    amr.lots = []; // user must re-load CSV each session to render charts + compute movement
   }
 
   updateAmrStatus();
